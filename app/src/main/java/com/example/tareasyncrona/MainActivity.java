@@ -11,16 +11,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.ANRequest;
-import com.androidnetworking.common.ANResponse;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.example.tareasyncrona.API.EmployeeServiceImpl;
+import com.example.tareasyncrona.API.TypeClientServiceImpl;
+import com.example.tareasyncrona.Modelo.Employee;
+import com.example.tareasyncrona.Modelo.EmployeeEntity;
 import com.example.tareasyncrona.Modelo.TypeClient;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONObject;
+import com.example.tareasyncrona.Modelo.TypeClientEntity;
+import com.example.tareasyncrona.RealmQuery.EmployeeQuery;
+import com.example.tareasyncrona.RealmQuery.TypeClientServiceDataBase;
 
 import java.util.ArrayList;
 
@@ -30,9 +28,6 @@ import io.realm.RealmConfiguration;
 public class MainActivity extends AppCompatActivity {
 
     ProgressDialog mProgressDialog;
-    ANResponse response;
-    ArrayList<TypeClient> typeClients;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +71,11 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            try(Realm realmInstance = Realm.getDefaultInstance()){
+                realmInstance.executeTransaction(realm -> realm.delete(EmployeeEntity.class));
+                realmInstance.executeTransaction(realm -> realm.delete(TypeClientEntity.class));
+            }
+            Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -88,15 +87,30 @@ public class MainActivity extends AppCompatActivity {
         protected Integer doInBackground(String... strings) {
             for (int j = 1; j <= 50; j++) {
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(10);
                     mProgressDialog.incrementProgressBy(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            response = fetchEmployee();
-            if (response.isSuccess()) {
-                for (int j = 1; j <= 50; j++) {
+            ArrayList<Employee> employees = EmployeeServiceImpl.getInstance().fetch();
+            EmployeeQuery.getInstance().addList(employees);
+            if (employees != null) {
+                for (int j = 1; j <= 25; j++) {
+                    try {
+                        Thread.sleep(50);
+                        mProgressDialog.incrementProgressBy(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                this.cancel(true);
+            }
+            ArrayList<TypeClient> typeClients= TypeClientServiceImpl.getInstance().fetch();
+            TypeClientServiceDataBase.getInstance().addList(typeClients);
+            if (typeClients != null) {
+                for (int j = 1; j <= 25; j++) {
                     try {
                         Thread.sleep(50);
                         mProgressDialog.incrementProgressBy(1);
@@ -144,33 +158,5 @@ public class MainActivity extends AppCompatActivity {
             mProgressDialog.dismiss();
             Toast.makeText(MainActivity.this, "Descarga fallida!!", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public ANResponse fetchEmployee() {
-        ANRequest request = AndroidNetworking.get("http://172.16.1.2:8000/api/types_clients")
-                .build();
-
-        ANResponse<JSONObject> response = request.executeForJSONObject();
-
-        request.getAsObject(ResponseList.class, new ParsedRequestListener<ResponseList>() {
-            @Override
-            public void onResponse(ResponseList response) {
-                typeClients = new GsonBuilder()
-                        .create()
-                        .fromJson(new Gson().toJsonTree(response.getData()),
-                                new TypeToken<ArrayList<TypeClient>>() {
-                                }.getType());
-                try (Realm realmInstance = Realm.getDefaultInstance()) {
-                    realmInstance.executeTransaction(realm -> realm.copyToRealmOrUpdate(typeClients));
-                }
-            }
-
-            @Override
-            public void onError(ANError anError) {
-
-            }
-        });
-
-        return response;
     }
 }
