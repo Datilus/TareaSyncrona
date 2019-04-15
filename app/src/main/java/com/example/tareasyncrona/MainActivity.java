@@ -11,12 +11,20 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
+import com.example.tareasyncrona.API.BankServiceImpl;
+import com.example.tareasyncrona.API.CatalogueCFDIServiceImpl;
 import com.example.tareasyncrona.API.EmployeeServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
+import com.example.tareasyncrona.Modelo.jsonModel.Bank;
+import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
 import com.example.tareasyncrona.Modelo.jsonModel.Employee;
+import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
+import com.example.tareasyncrona.Modelo.realmModel.CatalogueCFDIEntity;
 import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
+import com.example.tareasyncrona.services.dataBase.BankServiceDataBase;
+import com.example.tareasyncrona.services.dataBase.CatalogueCFDIDataBase;
 import com.example.tareasyncrona.services.dataBase.EmployeeServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDataBase;
 
@@ -71,9 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            try(Realm realmInstance = Realm.getDefaultInstance()){
+            try (Realm realmInstance = Realm.getDefaultInstance()) {
                 realmInstance.executeTransaction(realm -> realm.delete(EmployeeEntity.class));
                 realmInstance.executeTransaction(realm -> realm.delete(TypeClientEntity.class));
+                realmInstance.executeTransaction(realm -> realm.delete(BankEntity.class));
+                realmInstance.executeTransaction(realm -> realm.delete(CatalogueCFDIEntity.class));
             }
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
@@ -85,22 +95,34 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(String... strings) {
-
+            publishProgress(0);
             ArrayList<Employee> employees = EmployeeServiceImpl.getInstance().fetch();
             if (employees != null) {
                 EmployeeServiceDataBase.getInstance().addList(employees);
-                publishProgress(1);
             } else {
                 this.cancel(true);
             }
 
-            ArrayList<TypeClient> typeClients= TypeClientServiceImpl.getInstance().fetch();
+            publishProgress(1);
+            ArrayList<TypeClient> typeClients = TypeClientServiceImpl.getInstance().fetch();
             if (typeClients != null) {
                 TypeClientServiceDataBase.getInstance().addList(typeClients);
-                publishProgress(2);
             } else {
                 this.cancel(true);
             }
+
+            publishProgress(2);
+            ArrayList<Bank> banks = BankServiceImpl.getInstance().fetch();
+            if (banks != null) {
+                BankServiceDataBase.getInstance().addList(banks);
+            }
+
+            publishProgress(3);
+            ArrayList<CatalogueCFDI> catalogueCFDIS = CatalogueCFDIServiceImpl.getInstance().fetch();
+            if (catalogueCFDIS != null) {
+                CatalogueCFDIDataBase.getInstance().addList(catalogueCFDIS);
+            }
+
             return 20;
         }
 
@@ -109,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(MainActivity.this);
             mProgressDialog.setTitle("Simulando descarga ...");
-            mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
+            mProgressDialog.setMessage("CONECTANDO");
             mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
             mProgressDialog.show();
         }
@@ -123,8 +145,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            if  (values[0] >= 1)
-                mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
+            switch (values[0]) {
+                case 0:
+                    mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
+                case 1:
+                    mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
+                    break;
+                case 2:
+                    mProgressDialog.setMessage("SINCRONIZANDO BANCOS");
+                    break;
+                case 3:
+                    mProgressDialog.setMessage("SINCRONIZANDO CATALOGO CFDI");
+                    break;
+                default:
+                    mProgressDialog.setMessage("CONECTANDO");
+            }
         }
 
         @Override

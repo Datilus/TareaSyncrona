@@ -14,9 +14,10 @@ public class TypeClientServiceDataBase implements TypeClientService {
 
     private static TypeClientServiceDataBase instance;
 
-    private TypeClientServiceDataBase() {}
+    private TypeClientServiceDataBase() {
+    }
 
-    public static TypeClientServiceDataBase getInstance(){
+    public static TypeClientServiceDataBase getInstance() {
         if (instance == null)
             instance = new TypeClientServiceDataBase();
         return instance;

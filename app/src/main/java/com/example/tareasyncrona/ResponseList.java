@@ -11,7 +11,7 @@ public class ResponseList<T> {
     @SerializedName("message")
     private String message;
 
-    public ResponseList(){
+    public ResponseList() {
 
     }
 

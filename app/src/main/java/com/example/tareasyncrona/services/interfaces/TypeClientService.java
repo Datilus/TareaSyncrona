@@ -6,5 +6,6 @@ import java.util.ArrayList;
 
 public interface TypeClientService {
     ArrayList<TypeClient> fetch();
+
     void addList(ArrayList<TypeClient> typeClients);
 }

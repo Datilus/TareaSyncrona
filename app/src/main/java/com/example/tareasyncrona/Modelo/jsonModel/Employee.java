@@ -163,7 +163,6 @@ public class Employee {
     }
 
     public static class Builder {
-
         private Integer employeeId;
         private Integer jobId;
         private Double creditLimit;
@@ -197,12 +196,12 @@ public class Employee {
             );
         }
 
-        public Builder setEmployeeId(int employeeId) {
+        public Builder setEmployeeId(Integer employeeId) {
             this.employeeId = employeeId;
             return this;
         }
 
-        public Builder setJobId(int jobId) {
+        public Builder setJobId(Integer jobId) {
             this.jobId = jobId;
             return this;
         }
@@ -212,47 +211,47 @@ public class Employee {
             return this;
         }
 
-        public Builder setEmployee(String employee){
+        public Builder setEmployee(String employee) {
             this.employee = employee;
             return this;
         }
 
-        public Builder setRouteId(int routeId){
+        public Builder setRouteId(Integer routeId) {
             this.routeId = routeId;
             return this;
         }
 
-        public Builder setPriceListByRouteId(int priceListByRouteId){
+        public Builder setPriceListByRouteId(Integer priceListByRouteId) {
             this.priceListByRouteId = priceListByRouteId;
             return this;
         }
 
-        public Builder setRoute(int route){
+        public Builder setRoute(Integer route) {
             this.route = route;
             return this;
         }
 
-        public Builder setRouteType(int routeType){
+        public Builder setRouteType(Integer routeType) {
             this.routeType = routeType;
             return this;
         }
 
-        public Builder setMarketType(int marketType){
+        public Builder setMarketType(Integer marketType) {
             this.marketType = marketType;
             return this;
         }
 
-        public Builder setUser(String user){
+        public Builder setUser(String user) {
             this.user = user;
             return this;
         }
 
-        public Builder setPassword(String password){
+        public Builder setPassword(String password) {
             this.password = password;
             return this;
         }
 
-        public Builder setDate(String date){
+        public Builder setDate(String date) {
             this.date = date;
             return this;
         }

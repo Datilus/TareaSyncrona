@@ -8,16 +8,16 @@ import io.realm.annotations.PrimaryKey;
 public class TypeClientEntity extends RealmObject {
 
     @PrimaryKey
-    private int idTypeClient = 0;
+    private Integer idTypeClient = 0;
     private String name = "";
-    private int active = 0;
-    private int userRegister = 0;
+    private Integer active = 0;
+    private Integer userRegister = 0;
     private String dateRegister = "";
 
     public TypeClientEntity() {
     }
 
-    public TypeClientEntity(TypeClient typeClient){
+    public TypeClientEntity(TypeClient typeClient) {
         this.idTypeClient = typeClient.getIdTypeClient();
         this.name = typeClient.getName();
         this.active = typeClient.getActive();
@@ -25,11 +25,11 @@ public class TypeClientEntity extends RealmObject {
         this.dateRegister = typeClient.getDateRegister();
     }
 
-    public int getIdTypeClient() {
+    public Integer getIdTypeClient() {
         return idTypeClient;
     }
 
-    public void setIdTypeClient(int idTypeClient) {
+    public void setIdTypeClient(Integer idTypeClient) {
         this.idTypeClient = idTypeClient;
     }
 
@@ -41,19 +41,19 @@ public class TypeClientEntity extends RealmObject {
         this.name = name;
     }
 
-    public int getActive() {
+    public Integer getActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(Integer active) {
         this.active = active;
     }
 
-    public int getUserRegister() {
+    public Integer getUserRegister() {
         return userRegister;
     }
 
-    public void setUserRegister(int userRegister) {
+    public void setUserRegister(Integer userRegister) {
         this.userRegister = userRegister;
     }
 

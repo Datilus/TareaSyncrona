@@ -16,9 +16,10 @@ public class TypeClientServiceImpl implements TypeClientService {
 
     private static TypeClientServiceImpl instance;
 
-    private TypeClientServiceImpl() {}
+    private TypeClientServiceImpl() {
+    }
 
-    public static TypeClientServiceImpl getInstance(){
+    public static TypeClientServiceImpl getInstance() {
         if (instance == null)
             instance = new TypeClientServiceImpl();
         return instance;

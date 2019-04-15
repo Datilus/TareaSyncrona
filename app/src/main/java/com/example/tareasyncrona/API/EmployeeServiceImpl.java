@@ -11,15 +11,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
     private static EmployeeServiceImpl instance;
 
-    private EmployeeServiceImpl(){}
+    private EmployeeServiceImpl() {
+    }
 
-    public static EmployeeServiceImpl getInstance(){
+    public static EmployeeServiceImpl getInstance() {
         if (instance == null)
             instance = new EmployeeServiceImpl();
         return instance;

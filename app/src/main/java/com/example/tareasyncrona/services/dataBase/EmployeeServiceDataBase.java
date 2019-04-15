@@ -14,10 +14,11 @@ public class EmployeeServiceDataBase implements EmployeeService {
 
     private static EmployeeServiceDataBase instance;
 
-    private EmployeeServiceDataBase() {}
+    private EmployeeServiceDataBase() {
+    }
 
-    public static EmployeeServiceDataBase getInstance(){
-        if  (instance == null)
+    public static EmployeeServiceDataBase getInstance() {
+        if (instance == null)
             instance = new EmployeeServiceDataBase();
         return instance;
     }
@@ -29,7 +30,7 @@ public class EmployeeServiceDataBase implements EmployeeService {
 
     @Override
     public Employee getById(int id) {
-        try (Realm realmInstance = Realm.getDefaultInstance()){
+        try (Realm realmInstance = Realm.getDefaultInstance()) {
             return new Employee(realmInstance.where(EmployeeEntity.class)
                     .equalTo("employeeId", id)
                     .findFirst());
