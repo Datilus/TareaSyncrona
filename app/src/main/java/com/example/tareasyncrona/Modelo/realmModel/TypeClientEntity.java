@@ -1,4 +1,6 @@
-package com.example.tareasyncrona.Modelo;
+package com.example.tareasyncrona.Modelo.realmModel;
+
+import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

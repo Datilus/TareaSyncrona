@@ -3,7 +3,7 @@ package com.example.tareasyncrona.API;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.ANResponse;
-import com.example.tareasyncrona.Modelo.Employee;
+import com.example.tareasyncrona.Modelo.jsonModel.Employee;
 import com.example.tareasyncrona.ResponseList;
 import com.example.tareasyncrona.services.interfaces.EmployeeService;
 import com.google.gson.Gson;
@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -40,6 +41,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .fromJson(new Gson().toJsonTree(response.getResult().getData()),
                             new TypeToken<ArrayList<Employee>>() {
                             }.getType());
+        } else if (response.isSuccess() && response.getResult().getData() == null) { //Crea un empleado por defecto, al no enviar uno la API
+            employees.add(new Employee());
         }
         return employees;
     }

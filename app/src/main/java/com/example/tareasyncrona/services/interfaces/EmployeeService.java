@@ -1,6 +1,6 @@
 package com.example.tareasyncrona.services.interfaces;
 
-import com.example.tareasyncrona.Modelo.Employee;
+import com.example.tareasyncrona.Modelo.jsonModel.Employee;
 
 import java.util.ArrayList;
 

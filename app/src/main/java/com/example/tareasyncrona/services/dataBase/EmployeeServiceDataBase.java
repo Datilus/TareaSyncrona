@@ -1,8 +1,8 @@
 package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
-import com.example.tareasyncrona.Modelo.Employee;
-import com.example.tareasyncrona.Modelo.EmployeeEntity;
+import com.example.tareasyncrona.Modelo.jsonModel.Employee;
+import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
 import com.example.tareasyncrona.services.interfaces.EmployeeService;
 
 import java.util.ArrayList;

@@ -13,10 +13,10 @@ import android.widget.Toast;
 import com.androidnetworking.AndroidNetworking;
 import com.example.tareasyncrona.API.EmployeeServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
-import com.example.tareasyncrona.Modelo.Employee;
-import com.example.tareasyncrona.Modelo.EmployeeEntity;
-import com.example.tareasyncrona.Modelo.TypeClient;
-import com.example.tareasyncrona.Modelo.TypeClientEntity;
+import com.example.tareasyncrona.Modelo.jsonModel.Employee;
+import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
+import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
+import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.EmployeeServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDataBase;
 
@@ -87,16 +87,16 @@ public class MainActivity extends AppCompatActivity {
         protected Integer doInBackground(String... strings) {
 
             ArrayList<Employee> employees = EmployeeServiceImpl.getInstance().fetch();
-            EmployeeServiceDataBase.getInstance().addList(employees);
             if (employees != null) {
+                EmployeeServiceDataBase.getInstance().addList(employees);
                 publishProgress(1);
             } else {
                 this.cancel(true);
             }
 
             ArrayList<TypeClient> typeClients= TypeClientServiceImpl.getInstance().fetch();
-            TypeClientServiceDataBase.getInstance().addList(typeClients);
             if (typeClients != null) {
+                TypeClientServiceDataBase.getInstance().addList(typeClients);
                 publishProgress(2);
             } else {
                 this.cancel(true);

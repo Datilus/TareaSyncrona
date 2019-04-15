@@ -1,5 +1,6 @@
-package com.example.tareasyncrona.Modelo;
+package com.example.tareasyncrona.Modelo.jsonModel;
 
+import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.annotations.PrimaryKey;
