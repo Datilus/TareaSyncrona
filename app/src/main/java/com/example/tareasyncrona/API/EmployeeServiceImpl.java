@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee get(int id) {
+    public Employee getById(int id) {
         return null;
     }
 

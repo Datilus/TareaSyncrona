@@ -17,8 +17,8 @@ import com.example.tareasyncrona.Modelo.Employee;
 import com.example.tareasyncrona.Modelo.EmployeeEntity;
 import com.example.tareasyncrona.Modelo.TypeClient;
 import com.example.tareasyncrona.Modelo.TypeClientEntity;
-import com.example.tareasyncrona.RealmQuery.EmployeeQuery;
-import com.example.tareasyncrona.RealmQuery.TypeClientServiceDataBase;
+import com.example.tareasyncrona.services.dataBase.EmployeeServiceDataBase;
+import com.example.tareasyncrona.services.dataBase.TypeClientServiceDataBase;
 
 import java.util.ArrayList;
 
@@ -85,43 +85,22 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(String... strings) {
-            for (int j = 1; j <= 50; j++) {
-                try {
-                    Thread.sleep(10);
-                    mProgressDialog.incrementProgressBy(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+
             ArrayList<Employee> employees = EmployeeServiceImpl.getInstance().fetch();
-            EmployeeQuery.getInstance().addList(employees);
+            EmployeeServiceDataBase.getInstance().addList(employees);
             if (employees != null) {
-                for (int j = 1; j <= 25; j++) {
-                    try {
-                        Thread.sleep(50);
-                        mProgressDialog.incrementProgressBy(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                publishProgress(1);
             } else {
                 this.cancel(true);
             }
+
             ArrayList<TypeClient> typeClients= TypeClientServiceImpl.getInstance().fetch();
             TypeClientServiceDataBase.getInstance().addList(typeClients);
             if (typeClients != null) {
-                for (int j = 1; j <= 25; j++) {
-                    try {
-                        Thread.sleep(50);
-                        mProgressDialog.incrementProgressBy(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                publishProgress(2);
             } else {
                 this.cancel(true);
             }
-            publishProgress();
             return 20;
         }
 
@@ -130,11 +109,8 @@ public class MainActivity extends AppCompatActivity {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(MainActivity.this);
             mProgressDialog.setTitle("Simulando descarga ...");
-            mProgressDialog.setMessage("Descarga en progreso ...");
-            mProgressDialog.setProgressStyle(mProgressDialog.STYLE_HORIZONTAL);
-            mProgressDialog.setProgress(0);
-            mProgressDialog.setMax(100);
-            mProgressDialog.setCancelable(false);
+            mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
+            mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
             mProgressDialog.show();
         }
 
@@ -147,9 +123,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            if (mProgressDialog.getProgress() < mProgressDialog.getMax()) {
-                mProgressDialog.setProgress(values[0]);
-            }
+            if  (values[0] >= 1)
+                mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
         }
 
         @Override

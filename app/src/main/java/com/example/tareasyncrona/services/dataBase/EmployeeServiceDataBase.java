@@ -1,4 +1,4 @@
-package com.example.tareasyncrona.RealmQuery;
+package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
 import com.example.tareasyncrona.Modelo.Employee;
@@ -10,15 +10,15 @@ import java.util.List;
 
 import io.realm.Realm;
 
-public class EmployeeQuery implements EmployeeService {
+public class EmployeeServiceDataBase implements EmployeeService {
 
-    private static EmployeeQuery instance;
+    private static EmployeeServiceDataBase instance;
 
-    private EmployeeQuery() {}
+    private EmployeeServiceDataBase() {}
 
-    public static EmployeeQuery getInstance(){
+    public static EmployeeServiceDataBase getInstance(){
         if  (instance == null)
-            instance = new EmployeeQuery();
+            instance = new EmployeeServiceDataBase();
         return instance;
     }
 
@@ -28,9 +28,11 @@ public class EmployeeQuery implements EmployeeService {
     }
 
     @Override
-    public Employee get(int id) {
+    public Employee getById(int id) {
         try (Realm realmInstance = Realm.getDefaultInstance()){
-            return new Employee(realmInstance.where(EmployeeEntity.class).findFirst());
+            return new Employee(realmInstance.where(EmployeeEntity.class)
+                    .equalTo("employeeId", id)
+                    .findFirst());
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.tareasyncrona.RealmQuery;
+package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
 import com.example.tareasyncrona.Modelo.TypeClient;

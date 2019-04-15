@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface EmployeeService {
     ArrayList<Employee> fetch();
-    Employee get(int id);
+    Employee getById(int id);
     void add(Employee employee);
     void addList(ArrayList<Employee> employees);
 }
