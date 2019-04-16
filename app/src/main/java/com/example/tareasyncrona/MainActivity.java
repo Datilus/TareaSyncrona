@@ -14,21 +14,25 @@ import com.androidnetworking.AndroidNetworking;
 import com.example.tareasyncrona.API.BankServiceImpl;
 import com.example.tareasyncrona.API.CatalogueCFDIServiceImpl;
 import com.example.tareasyncrona.API.CediServiceImpl;
+import com.example.tareasyncrona.API.ChargeServiceImpl;
 import com.example.tareasyncrona.API.EmployeeServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
 import com.example.tareasyncrona.Modelo.jsonModel.Cedi;
+import com.example.tareasyncrona.Modelo.jsonModel.Charge;
 import com.example.tareasyncrona.Modelo.jsonModel.Employee;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
 import com.example.tareasyncrona.Modelo.realmModel.CatalogueCFDIEntity;
 import com.example.tareasyncrona.Modelo.realmModel.CediEntity;
+import com.example.tareasyncrona.Modelo.realmModel.ChargeEntity;
 import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIDataBase;
 import com.example.tareasyncrona.services.dataBase.CediServiceDataBase;
+import com.example.tareasyncrona.services.dataBase.ChargeServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.EmployeeServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDataBase;
 
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 realmInstance.executeTransaction(realm -> realm.delete(BankEntity.class));
                 realmInstance.executeTransaction(realm -> realm.delete(CatalogueCFDIEntity.class));
                 realmInstance.executeTransaction(realm -> realm.delete(CediEntity.class));
+                realmInstance.executeTransaction(realm -> realm.delete(ChargeEntity.class));
             }
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
@@ -140,6 +145,14 @@ public class MainActivity extends AppCompatActivity {
                 this.cancel(true);
             }
 
+            publishProgress(5);
+            ArrayList<Charge> charges = ChargeServiceImpl.getInstance().fetch();
+            if (charges != null){
+                ChargeServiceDataBase.getInstance().addList(charges);
+            } else {
+                this.cancel(true);
+            }
+
             return 20;
         }
 
@@ -165,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
             switch (values[0]) {
                 case 0:
                     mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
+                    break;
                 case 1:
                     mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
                     break;
@@ -176,6 +190,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 4:
                     mProgressDialog.setMessage("SINCRONIZANDO CEDIS");
+                    break;
+                case 5:
+                    mProgressDialog.setMessage("SINCRONIZANDO CARGOS");
                     break;
                 default:
                     mProgressDialog.setMessage("CONECTANDO");
