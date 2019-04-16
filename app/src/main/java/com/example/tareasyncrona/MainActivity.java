@@ -15,24 +15,32 @@ import com.example.tareasyncrona.API.BankServiceImpl;
 import com.example.tareasyncrona.API.CatalogueCFDIServiceImpl;
 import com.example.tareasyncrona.API.CediServiceImpl;
 import com.example.tareasyncrona.API.ChargeServiceImpl;
+import com.example.tareasyncrona.API.ClientAuthorizationServiceImpl;
+import com.example.tareasyncrona.API.ClientServiceImpl;
 import com.example.tareasyncrona.API.EmployeeServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
 import com.example.tareasyncrona.Modelo.jsonModel.Cedi;
 import com.example.tareasyncrona.Modelo.jsonModel.Charge;
+import com.example.tareasyncrona.Modelo.jsonModel.Client;
+import com.example.tareasyncrona.Modelo.jsonModel.ClientAuthorization;
 import com.example.tareasyncrona.Modelo.jsonModel.Employee;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
 import com.example.tareasyncrona.Modelo.realmModel.CatalogueCFDIEntity;
 import com.example.tareasyncrona.Modelo.realmModel.CediEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ChargeEntity;
+import com.example.tareasyncrona.Modelo.realmModel.ClientAuthorizationEntity;
+import com.example.tareasyncrona.Modelo.realmModel.ClientEntity;
 import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIDataBase;
 import com.example.tareasyncrona.services.dataBase.CediServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.ChargeServiceDataBase;
+import com.example.tareasyncrona.services.dataBase.ClientAuthorizationDataBase;
+import com.example.tareasyncrona.services.dataBase.ClientServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.EmployeeServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDataBase;
 
@@ -94,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
                 realmInstance.executeTransaction(realm -> realm.delete(CatalogueCFDIEntity.class));
                 realmInstance.executeTransaction(realm -> realm.delete(CediEntity.class));
                 realmInstance.executeTransaction(realm -> realm.delete(ChargeEntity.class));
+                realmInstance.executeTransaction(realm -> realm.delete(ClientEntity.class));
+                realmInstance.executeTransaction(realm -> realm.delete(ClientAuthorizationEntity.class));
             }
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
@@ -153,6 +163,22 @@ public class MainActivity extends AppCompatActivity {
                 this.cancel(true);
             }
 
+            publishProgress(6);
+            ArrayList<Client> clients = ClientServiceImpl.getInstance().fetch();
+            if (clients != null){
+                ClientServiceDataBase.getInstance().addList(clients);
+            } else {
+                this.cancel(true);
+            }
+
+            publishProgress(7);
+            ArrayList<ClientAuthorization> clientAuthorizations = ClientAuthorizationServiceImpl.getInstance().fetch();
+            if (clientAuthorizations != null){
+                ClientAuthorizationDataBase.getInstance().addList(clientAuthorizations);
+            } else {
+                this.cancel(true);
+            }
+
             return 20;
         }
 
@@ -193,6 +219,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 5:
                     mProgressDialog.setMessage("SINCRONIZANDO CARGOS");
+                    break;
+                case 6:
+                    mProgressDialog.setMessage("SINCRONIZANDO CLIENTES");
+                    break;
+                case 7:
+                    mProgressDialog.setMessage("SINCRONIZANDO AUTORIZACIONES");
                     break;
                 default:
                     mProgressDialog.setMessage("CONECTANDO");
