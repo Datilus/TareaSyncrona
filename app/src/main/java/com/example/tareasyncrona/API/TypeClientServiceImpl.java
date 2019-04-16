@@ -1,8 +1,12 @@
 package com.example.tareasyncrona.API;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.ANResponse;
+import com.example.tareasyncrona.MainActivity;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.ResponseList;
 import com.example.tareasyncrona.services.interfaces.TypeClientService;

@@ -13,18 +13,22 @@ import android.widget.Toast;
 import com.androidnetworking.AndroidNetworking;
 import com.example.tareasyncrona.API.BankServiceImpl;
 import com.example.tareasyncrona.API.CatalogueCFDIServiceImpl;
+import com.example.tareasyncrona.API.CediServiceImpl;
 import com.example.tareasyncrona.API.EmployeeServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
+import com.example.tareasyncrona.Modelo.jsonModel.Cedi;
 import com.example.tareasyncrona.Modelo.jsonModel.Employee;
+import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
 import com.example.tareasyncrona.Modelo.realmModel.CatalogueCFDIEntity;
+import com.example.tareasyncrona.Modelo.realmModel.CediEntity;
 import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
-import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIDataBase;
+import com.example.tareasyncrona.services.dataBase.CediServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.EmployeeServiceDataBase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDataBase;
 
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 realmInstance.executeTransaction(realm -> realm.delete(TypeClientEntity.class));
                 realmInstance.executeTransaction(realm -> realm.delete(BankEntity.class));
                 realmInstance.executeTransaction(realm -> realm.delete(CatalogueCFDIEntity.class));
+                realmInstance.executeTransaction(realm -> realm.delete(CediEntity.class));
             }
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
@@ -115,12 +120,24 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<Bank> banks = BankServiceImpl.getInstance().fetch();
             if (banks != null) {
                 BankServiceDataBase.getInstance().addList(banks);
+            } else {
+                this.cancel(true);
             }
 
             publishProgress(3);
             ArrayList<CatalogueCFDI> catalogueCFDIS = CatalogueCFDIServiceImpl.getInstance().fetch();
             if (catalogueCFDIS != null) {
                 CatalogueCFDIDataBase.getInstance().addList(catalogueCFDIS);
+            } else {
+                this.cancel(true);
+            }
+
+            publishProgress(4);
+            Cedi cedi = CediServiceImpl.getInstance().fetch();
+            if (cedi != null) {
+                CediServiceDataBase.getInstance().addObject(cedi);
+            } else {
+                this.cancel(true);
             }
 
             return 20;
@@ -156,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 3:
                     mProgressDialog.setMessage("SINCRONIZANDO CATALOGO CFDI");
+                    break;
+                case 4:
+                    mProgressDialog.setMessage("SINCRONIZANDO CEDIS");
                     break;
                 default:
                     mProgressDialog.setMessage("CONECTANDO");
