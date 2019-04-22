@@ -4,7 +4,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.ANResponse;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
-import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
+import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.ResponseList;
 import com.example.tareasyncrona.services.interfaces.CatalogueCFDIService;
 import com.google.gson.Gson;
@@ -27,12 +27,13 @@ public class CatalogueCFDIServiceImpl implements CatalogueCFDIService {
     }
 
     @Override
-    public ArrayList<CatalogueCFDI> fetch() {
+    public ResponseDataWithCode<ArrayList<CatalogueCFDI>> fetch() {
         ANRequest request = AndroidNetworking.get("http://172.16.1.2:8000/api/uses_cfdi")
                 .build();
         ANResponse<ResponseList<CatalogueCFDI>> response = request.executeForObject(ResponseList.class);
 
         ArrayList<CatalogueCFDI> catalogueCFDIs = null;
+        String message;
 
         if (response.isSuccess() && response.getResult().getData() != null) {
             catalogueCFDIs = new GsonBuilder()
@@ -40,8 +41,15 @@ public class CatalogueCFDIServiceImpl implements CatalogueCFDIService {
                     .fromJson(new Gson().toJsonTree(response.getResult().getData()),
                             new TypeToken<ArrayList<CatalogueCFDI>>() {
                             }.getType());
+            message = response.getResult().getMessage();
+        } else {
+            message = response.getError().getMessage();
         }
-        return catalogueCFDIs;
+
+        if (response.getOkHttpResponse() == null) {
+            new ResponseDataWithCode<>(catalogueCFDIs, 102, message);
+        }
+        return new ResponseDataWithCode<>(catalogueCFDIs, response.getOkHttpResponse().code(), message);
     }
 
     @Override

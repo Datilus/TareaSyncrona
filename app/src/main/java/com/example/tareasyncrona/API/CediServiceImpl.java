@@ -4,6 +4,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.ANResponse;
 import com.example.tareasyncrona.Modelo.jsonModel.Cedi;
+import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.ResponseObject;
 import com.example.tareasyncrona.services.interfaces.CediService;
 import com.google.gson.Gson;
@@ -25,21 +26,29 @@ public class CediServiceImpl implements CediService {
     }
 
     @Override
-    public Cedi fetch() {
+    public ResponseDataWithCode<Cedi> fetch() {
         ANRequest request = AndroidNetworking.get("http://172.16.1.2:8000/api/cedis/1/version/6.3.9")
                 .build();
 
         ANResponse<ResponseObject<Cedi>> response = request.executeForObject(ResponseObject.class);
 
         Cedi cedis = null;
+        String message;
 
         if (response.isSuccess() && response.getResult().getData() != null) {
             cedis = new GsonBuilder()
                     .create()
                     .fromJson(new Gson().toJsonTree(response.getResult().getData()),
                             Cedi.class);
+            message = response.getResult().getMessage();
+        } else {
+            message = response.getError().getMessage();
         }
-        return cedis;
+
+        if (response.getOkHttpResponse() == null) {
+            return new ResponseDataWithCode<>(cedis, 102, message);
+        }
+        return new ResponseDataWithCode<>(cedis, response.getOkHttpResponse().code(), message);
     }
 
     @Override

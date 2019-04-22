@@ -1,12 +1,9 @@
 package com.example.tareasyncrona.API;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.ANResponse;
-import com.example.tareasyncrona.MainActivity;
+import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.ResponseList;
 import com.example.tareasyncrona.services.interfaces.TypeClientService;
@@ -30,13 +27,14 @@ public class TypeClientServiceImpl implements TypeClientService {
     }
 
     @Override
-    public ArrayList<TypeClient> fetch() {
+    public ResponseDataWithCode<ArrayList<TypeClient>> fetch() {
         ANRequest request = AndroidNetworking.get("http://172.16.1.2:8000/api/types_clients")
                 .build();
 
         ANResponse<ResponseList<TypeClient>> response = request.executeForObject(ResponseList.class);
 
         ArrayList<TypeClient> typeClients = null;
+        String message;
 
         if (response.isSuccess() && response.getResult().getData() != null) {
             typeClients = new GsonBuilder()
@@ -44,8 +42,16 @@ public class TypeClientServiceImpl implements TypeClientService {
                     .fromJson(new Gson().toJsonTree(response.getResult().getData()),
                             new TypeToken<ArrayList<TypeClient>>() {
                             }.getType());
+            message = response.getResult().getMessage();
+        } else {
+            message = response.getError().getMessage();
         }
-        return typeClients;
+
+        if (response.getOkHttpResponse() == null){
+            return new ResponseDataWithCode<>(typeClients, 102, message);
+        }
+
+        return new ResponseDataWithCode<>(typeClients, response.getOkHttpResponse().code(), message);
     }
 
     @Override

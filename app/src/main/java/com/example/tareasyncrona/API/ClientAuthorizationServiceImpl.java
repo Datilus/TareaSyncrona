@@ -4,7 +4,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.ANResponse;
 import com.example.tareasyncrona.Modelo.jsonModel.ClientAuthorization;
-import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
+import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.ResponseList;
 import com.example.tareasyncrona.services.interfaces.ClientAuthorizationService;
 import com.google.gson.Gson;
@@ -26,13 +26,14 @@ public class ClientAuthorizationServiceImpl implements ClientAuthorizationServic
     }
 
     @Override
-    public ArrayList<ClientAuthorization> fetch() {
+    public ResponseDataWithCode<ArrayList<ClientAuthorization>> fetch() {
         ANRequest request = AndroidNetworking.get("http://172.16.1.2:8000/api/route/4/authorizations")
                 .build();
 
         ANResponse<ResponseList<ClientAuthorization>> response = request.executeForObject(ResponseList.class);
 
         ArrayList<ClientAuthorization> clientAuthorizations = null;
+        String message;
 
         if (response.isSuccess() && response.getResult().getData() != null) {
             clientAuthorizations = new GsonBuilder()
@@ -40,8 +41,15 @@ public class ClientAuthorizationServiceImpl implements ClientAuthorizationServic
                     .fromJson(new Gson().toJsonTree(response.getResult().getData()),
                             new TypeToken<ArrayList<ClientAuthorization>>() {
                             }.getType());
+            message = response.getResult().getMessage();
+        } else {
+            message = response.getError().getMessage();
         }
-        return clientAuthorizations;
+
+        if (response.getOkHttpResponse() == null){
+            return new ResponseDataWithCode<>(clientAuthorizations, 102, message);
+        }
+        return new ResponseDataWithCode<>(clientAuthorizations, response.getOkHttpResponse().code(), message);
     }
 
     @Override

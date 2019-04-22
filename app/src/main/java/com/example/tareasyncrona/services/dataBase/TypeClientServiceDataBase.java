@@ -1,6 +1,7 @@
 package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
+import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.interfaces.TypeClientService;
@@ -24,7 +25,7 @@ public class TypeClientServiceDataBase implements TypeClientService {
     }
 
     @Override
-    public ArrayList<TypeClient> fetch() {
+    public ResponseDataWithCode<ArrayList<TypeClient>> fetch() {
         return null;
     }
 

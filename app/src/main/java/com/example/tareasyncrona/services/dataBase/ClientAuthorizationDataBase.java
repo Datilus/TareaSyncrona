@@ -2,6 +2,7 @@ package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
 import com.example.tareasyncrona.Modelo.jsonModel.ClientAuthorization;
+import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.realmModel.ClientAuthorizationEntity;
 import com.example.tareasyncrona.services.interfaces.ClientAuthorizationService;
 
@@ -23,7 +24,7 @@ public class ClientAuthorizationDataBase implements ClientAuthorizationService {
     }
 
     @Override
-    public ArrayList<ClientAuthorization> fetch() {
+    public ResponseDataWithCode<ArrayList<ClientAuthorization>> fetch() {
         return null;
     }
 

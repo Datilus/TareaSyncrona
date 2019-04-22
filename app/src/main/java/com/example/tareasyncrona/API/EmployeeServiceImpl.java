@@ -4,6 +4,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.ANResponse;
 import com.example.tareasyncrona.Modelo.jsonModel.Employee;
+import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.ResponseList;
 import com.example.tareasyncrona.services.interfaces.EmployeeService;
 import com.google.gson.Gson;
@@ -27,13 +28,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public ArrayList<Employee> fetch() {
+    public ResponseDataWithCode<ArrayList<Employee>> fetch() {
         ANRequest request = AndroidNetworking.get("http://172.16.1.2:8000/api/cedis/1/employees")
                 .build();
 
         ANResponse<ResponseList<Employee>> response = request.executeForObject(ResponseList.class);
 
         ArrayList<Employee> employees = null;
+        String message;
 
         if (response.isSuccess() && response.getResult().getData() != null) {
             employees = new GsonBuilder()
@@ -41,10 +43,16 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .fromJson(new Gson().toJsonTree(response.getResult().getData()),
                             new TypeToken<ArrayList<Employee>>() {
                             }.getType());
-        } else if (response.isSuccess() && response.getResult().getData() == null) { //Crea un empleado por defecto, al no enviar uno la API
-            employees.add(new Employee());
+            message = response.getResult().getMessage();
+        } else {
+            message = response.getError().getMessage();
         }
-        return employees;
+
+        if (response.getOkHttpResponse() == null) {
+            return new ResponseDataWithCode<>(employees, 102, message);
+        }
+
+        return new ResponseDataWithCode<>(employees, response.getOkHttpResponse().code(), message);
     }
 
     @Override

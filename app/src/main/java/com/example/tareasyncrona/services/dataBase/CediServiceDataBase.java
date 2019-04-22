@@ -2,6 +2,7 @@ package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
 import com.example.tareasyncrona.Modelo.jsonModel.Cedi;
+import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.realmModel.CediEntity;
 import com.example.tareasyncrona.services.interfaces.CediService;
 
@@ -24,7 +25,7 @@ public class CediServiceDataBase implements CediService {
     }
 
     @Override
-    public Cedi fetch() {
+    public ResponseDataWithCode<Cedi> fetch() {
         return null;
     }
 

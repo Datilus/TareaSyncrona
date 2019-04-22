@@ -2,6 +2,7 @@ package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
+import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
 import com.example.tareasyncrona.services.interfaces.BankService;
 
@@ -24,7 +25,7 @@ public class BankServiceDataBase implements BankService {
     }
 
     @Override
-    public ArrayList<Bank> fetch() {
+    public ResponseDataWithCode<ArrayList<Bank>> fetch() {
         return null;
     }
 
