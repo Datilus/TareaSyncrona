@@ -20,6 +20,14 @@ public class ResponseDataWithCode<T> {
         return data;
     }
 
+    public Cedi getDataAsObject(){
+        return (Cedi) data;
+    }
+
+    public ArrayList getDataAsArray(){
+        return (ArrayList) data;
+    }
+
     public void setData(T data) {
         this.data = data;
     }

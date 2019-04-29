@@ -11,16 +11,16 @@ import java.util.List;
 
 import io.realm.Realm;
 
-public class TypeClientServiceDataBase implements TypeClientService {
+public class TypeClientServiceDatabase implements TypeClientService {
 
-    private static TypeClientServiceDataBase instance;
+    private static TypeClientServiceDatabase instance;
 
-    private TypeClientServiceDataBase() {
+    private TypeClientServiceDatabase() {
     }
 
-    public static TypeClientServiceDataBase getInstance() {
+    public static TypeClientServiceDatabase getInstance() {
         if (instance == null)
-            instance = new TypeClientServiceDataBase();
+            instance = new TypeClientServiceDatabase();
         return instance;
     }
 

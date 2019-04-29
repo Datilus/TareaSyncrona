@@ -11,15 +11,15 @@ import java.util.List;
 
 import io.realm.Realm;
 
-public class ClientAuthorizationDataBase implements ClientAuthorizationService {
+public class ClientAuthorizationServiceDatabase implements ClientAuthorizationService {
 
-    private static ClientAuthorizationDataBase instance;
+    private static ClientAuthorizationServiceDatabase instance;
 
-    private ClientAuthorizationDataBase(){}
+    private ClientAuthorizationServiceDatabase(){}
 
-    public static ClientAuthorizationDataBase getInstance(){
+    public static ClientAuthorizationServiceDatabase getInstance(){
         if (instance == null)
-            instance = new ClientAuthorizationDataBase();
+            instance = new ClientAuthorizationServiceDatabase();
         return instance;
     }
 

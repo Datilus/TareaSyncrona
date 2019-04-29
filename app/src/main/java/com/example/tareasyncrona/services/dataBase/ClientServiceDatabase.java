@@ -11,15 +11,15 @@ import java.util.List;
 
 import io.realm.Realm;
 
-public class ClientServiceDataBase implements ClientService {
+public class ClientServiceDatabase implements ClientService {
 
-    private static ClientServiceDataBase instance;
+    private static ClientServiceDatabase instance;
 
-    private ClientServiceDataBase(){}
+    private ClientServiceDatabase(){}
 
-    public static ClientServiceDataBase getInstance(){
+    public static ClientServiceDatabase getInstance(){
         if (instance == null)
-            instance= new ClientServiceDataBase();
+            instance= new ClientServiceDatabase();
         return instance;
     }
 

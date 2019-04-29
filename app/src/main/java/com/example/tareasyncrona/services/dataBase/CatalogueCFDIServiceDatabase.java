@@ -11,16 +11,16 @@ import java.util.List;
 
 import io.realm.Realm;
 
-public class CatalogueCFDIDataBase implements CatalogueCFDIService {
+public class CatalogueCFDIServiceDatabase implements CatalogueCFDIService {
 
-    private static CatalogueCFDIDataBase instance;
+    private static CatalogueCFDIServiceDatabase instance;
 
-    private CatalogueCFDIDataBase() {
+    private CatalogueCFDIServiceDatabase() {
     }
 
-    public static CatalogueCFDIDataBase getInstance() {
+    public static CatalogueCFDIServiceDatabase getInstance() {
         if (instance == null)
-            instance = new CatalogueCFDIDataBase();
+            instance = new CatalogueCFDIServiceDatabase();
         return instance;
     }
 

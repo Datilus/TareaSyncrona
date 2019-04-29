@@ -11,15 +11,15 @@ import java.util.List;
 
 import io.realm.Realm;
 
-public class ChargeServiceDataBase implements ChargeService {
+public class ChargeServiceDatabase implements ChargeService {
 
-    private static ChargeServiceDataBase instance;
+    private static ChargeServiceDatabase instance;
 
-    private ChargeServiceDataBase(){}
+    private ChargeServiceDatabase(){}
 
-    public static ChargeServiceDataBase getInstance(){
+    public static ChargeServiceDatabase getInstance(){
         if (instance == null)
-            instance = new ChargeServiceDataBase();
+            instance = new ChargeServiceDatabase();
         return instance;
     }
 

@@ -10,17 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
-public class BankServiceDataBase implements BankService {
+public class BankServiceDatabase implements BankService {
 
-    private static BankServiceDataBase instance;
+    private static BankServiceDatabase instance;
 
-    private BankServiceDataBase() {
+    private BankServiceDatabase() {
     }
 
-    public static BankServiceDataBase getInstance() {
+    public static BankServiceDatabase getInstance() {
         if (instance == null)
-            instance = new BankServiceDataBase();
+            instance = new BankServiceDatabase();
         return instance;
     }
 

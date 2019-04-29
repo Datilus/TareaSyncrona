@@ -11,16 +11,16 @@ import java.util.List;
 
 import io.realm.Realm;
 
-public class CediServiceDataBase implements CediService {
+public class CediServiceDatabase implements CediService {
 
-    private static CediServiceDataBase instance;
+    private static CediServiceDatabase instance;
 
-    private CediServiceDataBase() {
+    private CediServiceDatabase() {
     }
 
-    public static CediServiceDataBase getInstance() {
+    public static CediServiceDatabase getInstance() {
         if (instance == null)
-            instance = new CediServiceDataBase();
+            instance = new CediServiceDatabase();
         return instance;
     }
 

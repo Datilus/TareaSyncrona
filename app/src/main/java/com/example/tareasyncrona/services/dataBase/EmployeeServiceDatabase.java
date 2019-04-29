@@ -11,16 +11,16 @@ import java.util.List;
 
 import io.realm.Realm;
 
-public class EmployeeServiceDataBase implements EmployeeService {
+public class EmployeeServiceDatabase implements EmployeeService {
 
-    private static EmployeeServiceDataBase instance;
+    private static EmployeeServiceDatabase instance;
 
-    private EmployeeServiceDataBase() {
+    private EmployeeServiceDatabase() {
     }
 
-    public static EmployeeServiceDataBase getInstance() {
+    public static EmployeeServiceDatabase getInstance() {
         if (instance == null)
-            instance = new EmployeeServiceDataBase();
+            instance = new EmployeeServiceDatabase();
         return instance;
     }
 

@@ -9,6 +9,7 @@ import com.example.tareasyncrona.ResponseObject;
 import com.example.tareasyncrona.services.interfaces.CediService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
@@ -32,14 +33,40 @@ public class CediServiceImpl implements CediService {
 
         ANResponse<ResponseObject<Cedi>> response = request.executeForObject(ResponseObject.class);
 
-        Cedi cedis = null;
+        Cedi cedi = null;
+        String message;
+
+        if (response.isSuccess() && response.getResult().getData() != null) {
+            cedi = new GsonBuilder()
+                    .create()
+                    .fromJson(new Gson().toJsonTree(response.getResult().getData()),
+                            Cedi.class);
+            message = response.getResult().getMessage();
+        } else {
+            message = response.getError().getMessage();
+        }
+
+        if (response.getOkHttpResponse() == null) {
+            return new ResponseDataWithCode<>(cedi, 102, message);
+        }
+        return new ResponseDataWithCode<>(cedi, response.getOkHttpResponse().code(), message);
+    }
+
+    public ResponseDataWithCode<ArrayList<Cedi>> jalar() {
+        ANRequest request = AndroidNetworking.get("http://172.16.1.2:8000/api/cedis/1/version/6.3.9")
+                .build();
+
+        ANResponse<ResponseObject<Cedi>> response = request.executeForObject(ResponseObject.class);
+
+        ArrayList<Cedi> cedis = null;
         String message;
 
         if (response.isSuccess() && response.getResult().getData() != null) {
             cedis = new GsonBuilder()
                     .create()
                     .fromJson(new Gson().toJsonTree(response.getResult().getData()),
-                            Cedi.class);
+                            new TypeToken<ArrayList<Cedi>>() {
+                            }.getType());
             message = response.getResult().getMessage();
         } else {
             message = response.getError().getMessage();

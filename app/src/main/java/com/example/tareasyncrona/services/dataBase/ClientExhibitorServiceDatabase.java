@@ -11,15 +11,15 @@ import java.util.List;
 
 import io.realm.Realm;
 
-public class ClientExhibitorDataBase implements ClientExhibitorService {
+public class ClientExhibitorServiceDatabase implements ClientExhibitorService {
 
-    private static ClientExhibitorDataBase instance;
+    private static ClientExhibitorServiceDatabase instance;
 
-    private ClientExhibitorDataBase() {}
+    private ClientExhibitorServiceDatabase() {}
 
-    public static ClientExhibitorDataBase getInstance(){
+    public static ClientExhibitorServiceDatabase getInstance(){
         if (instance == null)
-            instance = new ClientExhibitorDataBase();
+            instance = new ClientExhibitorServiceDatabase();
         return instance;
     }
 

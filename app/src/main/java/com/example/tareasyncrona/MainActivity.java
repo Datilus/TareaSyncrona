@@ -17,6 +17,7 @@ import com.example.tareasyncrona.API.CediServiceImpl;
 import com.example.tareasyncrona.API.ChargeServiceImpl;
 import com.example.tareasyncrona.API.ClientAuthorizationServiceImpl;
 import com.example.tareasyncrona.API.ClientExhibitorServiceImpl;
+import com.example.tareasyncrona.API.ClientProductBonificationServiceImpl;
 import com.example.tareasyncrona.API.ClientServiceImpl;
 import com.example.tareasyncrona.API.EmployeeServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
@@ -27,6 +28,7 @@ import com.example.tareasyncrona.Modelo.jsonModel.Charge;
 import com.example.tareasyncrona.Modelo.jsonModel.Client;
 import com.example.tareasyncrona.Modelo.jsonModel.ClientAuthorization;
 import com.example.tareasyncrona.Modelo.jsonModel.ClientExhibitor;
+import com.example.tareasyncrona.Modelo.jsonModel.ClientProductBonification;
 import com.example.tareasyncrona.Modelo.jsonModel.Employee;
 import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
@@ -39,25 +41,26 @@ import com.example.tareasyncrona.Modelo.realmModel.ClientEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ClientExhibitorEntity;
 import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
-import com.example.tareasyncrona.services.dataBase.BankServiceDataBase;
-import com.example.tareasyncrona.services.dataBase.CatalogueCFDIDataBase;
-import com.example.tareasyncrona.services.dataBase.CediServiceDataBase;
-import com.example.tareasyncrona.services.dataBase.ChargeServiceDataBase;
-import com.example.tareasyncrona.services.dataBase.ClientAuthorizationDataBase;
-import com.example.tareasyncrona.services.dataBase.ClientExhibitorDataBase;
-import com.example.tareasyncrona.services.dataBase.ClientServiceDataBase;
-import com.example.tareasyncrona.services.dataBase.EmployeeServiceDataBase;
-import com.example.tareasyncrona.services.dataBase.TypeClientServiceDataBase;
+import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.CediServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.ChargeServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.ClientAuthorizationServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.ClientExhibitorServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.ClientProductBonificationDatabase;
+import com.example.tareasyncrona.services.dataBase.ClientServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.EmployeeServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.TypeClientServiceDatabase;
+import com.example.tareasyncrona.services.interfaces.CediService;
 
 import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    AsyncTask asyncTask = new ProgressDialogAsyncTask();
     ProgressDialog mProgressDialog;
 
     @Override
@@ -93,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void deleteRealm(Class clase){
+        try (Realm realmInstance = Realm.getDefaultInstance()) {
+            realmInstance.executeTransaction(realm -> realm.delete(clase));
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -102,127 +111,127 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            try (Realm realmInstance = Realm.getDefaultInstance()) {
-                realmInstance.executeTransaction(realm -> realm.delete(EmployeeEntity.class));
-                realmInstance.executeTransaction(realm -> realm.delete(TypeClientEntity.class));
-                realmInstance.executeTransaction(realm -> realm.delete(BankEntity.class));
-                realmInstance.executeTransaction(realm -> realm.delete(CatalogueCFDIEntity.class));
-                realmInstance.executeTransaction(realm -> realm.delete(CediEntity.class));
-                realmInstance.executeTransaction(realm -> realm.delete(ChargeEntity.class));
-                realmInstance.executeTransaction(realm -> realm.delete(ClientEntity.class));
-                realmInstance.executeTransaction(realm -> realm.delete(ClientAuthorizationEntity.class));
-                realmInstance.executeTransaction(realm -> realm.delete(ClientExhibitorEntity.class));
-            }
+            deleteRealm(BankEntity.class);
+            deleteRealm(CatalogueCFDIEntity.class);
+            deleteRealm(CediEntity.class);
+            deleteRealm(ChargeEntity.class);
+            deleteRealm(ClientEntity.class);
+            deleteRealm(ClientAuthorizationEntity.class);
+            deleteRealm(ClientExhibitorEntity.class);
+            deleteRealm(ClientProductBonification.class);
+            deleteRealm(EmployeeEntity.class);
+            deleteRealm(TypeClientEntity.class);
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void dataValidator(ResponseDataWithCode responseDataWithCode){
-        if (responseDataWithCode.getData() != null){
+    public class ProgressDialogAsyncTask extends AsyncTask<String, Integer, Integer> {
 
-        } else {
-            if (responseDataWithCode.getCode() == 102) {
+        private void saveWithStatusCode(ResponseDataWithCode responseDataWithCode, Class manager) {
+            if (responseDataWithCode.getData() != null) {
+                System.out.println(manager.getSimpleName());
+                System.out.println(responseDataWithCode.getData().getClass().getSimpleName());
+                switch (manager.getSimpleName()) {
+                    case "BankServiceDatabase": {
+                        BankServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "CatalogueCFDIServiceDatabase": {
+                        CatalogueCFDIServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "CediServiceDatabase": {
+                        CediServiceDatabase.getInstance().addObject(responseDataWithCode.getDataAsObject());
+//                        CediServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "ChargeServiceDatabase": {
+                        ChargeServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "ClientAuthorizationServiceDatabase": {
+                        ClientAuthorizationServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "ClientExhibitorServiceDatabase": {
+                        ClientExhibitorServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "ClientServiceDatabase": {
+                        ClientServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "ClientProductBonificationDatabase": {
+                        ClientProductBonificationDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "EmployeeServiceDatabase": {
+                        EmployeeServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "TypeClientServiceDatabase": {
+                        TypeClientServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    default: {
 
+                    }
+                }
+            } else {
+                if (responseDataWithCode.getCode() == 102) {
+                    this.cancel(true);
+                }
             }
         }
-    }
-
-    public class ProgressDialogAsyncTask extends AsyncTask<String, Integer, Integer> {
 
         @Override
         protected Integer doInBackground(String... strings) {
+
             publishProgress(0);
-            ResponseDataWithCode<ArrayList<Employee>> employees = EmployeeServiceImpl.getInstance().fetch();
-            if (employees.getData() != null) {
-                EmployeeServiceDataBase.getInstance().addList(employees.getData());
-            } else {
-                if (employees.getCode() == 102) {
-                    this.cancel(true);
-                }
-            }
+            ResponseDataWithCode<ArrayList<Bank>> bank = BankServiceImpl.getInstance().fetch();
+            saveWithStatusCode(bank, BankServiceDatabase.class);
 
             publishProgress(1);
-            ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
-            if (typeClients.getData() != null) {
-                TypeClientServiceDataBase.getInstance().addList(typeClients.getData());
-            } else {
-                if (typeClients.getCode() == 102) {
-                    this.cancel(true);
-                }
-            }
+            ResponseDataWithCode<ArrayList<CatalogueCFDI>> catalogueCFDIs = CatalogueCFDIServiceImpl.getInstance().fetch();
+            saveWithStatusCode(catalogueCFDIs, CatalogueCFDIServiceDatabase.class);
+
+//            publishProgress(2);
+//            ResponseDataWithCode<ArrayList<Cedi>> cedis = CediServiceImpl.getInstance().jalar();
+//            saveWithStatusCode(cedis, CediServiceDatabase.class);
 
             publishProgress(2);
-            ResponseDataWithCode<ArrayList<Bank>> banks = BankServiceImpl.getInstance().fetch();
-            if (banks.getData() != null) {
-                BankServiceDataBase.getInstance().addList(banks.getData());
-            } else {
-                if (banks.getCode() == 102) {
-                    this.cancel(true);
-                }
-            }
+            ResponseDataWithCode<Cedi> cedi = CediServiceImpl.getInstance().fetch();
+            saveWithStatusCode(cedi, CediServiceDatabase.class);
 
             publishProgress(3);
-            ResponseDataWithCode<ArrayList<CatalogueCFDI>> catalogueCFDIS = CatalogueCFDIServiceImpl.getInstance().fetch();
-            if (catalogueCFDIS.getData() != null) {
-                CatalogueCFDIDataBase.getInstance().addList(catalogueCFDIS.getData());
-            } else {
-                if (catalogueCFDIS.getCode() == 102) {
-                    this.cancel(true);
-                }
-            }
+            ResponseDataWithCode<ArrayList<Charge>> charges = ChargeServiceImpl.getInstance().fetch();
+            saveWithStatusCode(charges, ChargeServiceDatabase.class);
 
             publishProgress(4);
-            ResponseDataWithCode<Cedi> cedi = CediServiceImpl.getInstance().fetch();
-            if (cedi.getData() != null) {
-                CediServiceDataBase.getInstance().addObject(cedi.getData());
-            } else {
-                if (cedi.getCode() == 102) {
-                    this.cancel(true);
-                }
-            }
+            ResponseDataWithCode<ArrayList<Client>> clients = ClientServiceImpl.getInstance().fetch();
+            saveWithStatusCode(clients, ClientServiceDatabase.class);
 
             publishProgress(5);
-            ResponseDataWithCode<ArrayList<Charge>> charges = ChargeServiceImpl.getInstance().fetch();
-            if (charges.getData() != null) {
-                ChargeServiceDataBase.getInstance().addList(charges.getData());
-            } else {
-                if (charges.getCode() == 102) {
-                    this.cancel(true);
-                }
-            }
+            ResponseDataWithCode<ArrayList<ClientAuthorization>> clientAuthorizations = ClientAuthorizationServiceImpl.getInstance().fetch();
+            saveWithStatusCode(clientAuthorizations, ClientAuthorizationServiceDatabase.class);
 
             publishProgress(6);
-            ResponseDataWithCode<ArrayList<Client>> clients = ClientServiceImpl.getInstance().fetch();
-            if (clients.getData() != null) {
-                ClientServiceDataBase.getInstance().addList(clients.getData());
-            } else {
-                if (clients.getCode() == 102) {
-                    this.cancel(true);
-                }
-            }
+            ResponseDataWithCode<ArrayList<ClientExhibitor>> clientExhibitors = ClientExhibitorServiceImpl.getInstance().fetch();
+            saveWithStatusCode(clientExhibitors, ClientExhibitorServiceDatabase.class);
 
             publishProgress(7);
-            ResponseDataWithCode<ArrayList<ClientAuthorization>> clientAuthorizations = ClientAuthorizationServiceImpl.getInstance().fetch();
-            if (clientAuthorizations.getData() != null) {
-                ClientAuthorizationDataBase.getInstance().addList(clientAuthorizations.getData());
-            } else {
-                if (clientAuthorizations.getCode() == 102){
-                    this.cancel(true);
-                }
-            }
+            ResponseDataWithCode<ArrayList<ClientProductBonification>> clientProductBonifications = ClientProductBonificationServiceImpl.getInstance().fetch();
+            saveWithStatusCode(clientProductBonifications, ClientProductBonificationDatabase.class);
 
             publishProgress(8);
-            ResponseDataWithCode<ArrayList<ClientExhibitor>> clientExhibitors = ClientExhibitorServiceImpl.getInstance()
-                    .fetch();
-            if (clientExhibitors.getData() != null) {
-                ClientExhibitorDataBase.getInstance().addList(clientExhibitors.getData());
-            } else {
-                if (clientExhibitors.getCode() == 102) {
-                    this.cancel(true);
-                }
-            }
+            ResponseDataWithCode<ArrayList<Employee>> employees = EmployeeServiceImpl.getInstance().fetch();
+            saveWithStatusCode(employees, EmployeeServiceDatabase.class);
+
+            publishProgress(9);
+            ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
+            saveWithStatusCode(typeClients, TypeClientServiceDatabase.class);
 
             return 20;
         }
@@ -235,7 +244,6 @@ public class MainActivity extends AppCompatActivity {
             mProgressDialog.setMessage("CONECTANDO");
             mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
             mProgressDialog.show();
-            isCancelled();
         }
 
         @Override
@@ -249,31 +257,34 @@ public class MainActivity extends AppCompatActivity {
             super.onProgressUpdate(values);
             switch (values[0]) {
                 case 0:
-                    mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
-                    break;
-                case 1:
-                    mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
-                    break;
-                case 2:
                     mProgressDialog.setMessage("SINCRONIZANDO BANCOS");
                     break;
-                case 3:
+                case 1:
                     mProgressDialog.setMessage("SINCRONIZANDO CATALOGO CFDI");
                     break;
-                case 4:
+                case 2:
                     mProgressDialog.setMessage("SINCRONIZANDO CEDIS");
                     break;
-                case 5:
+                case 3:
                     mProgressDialog.setMessage("SINCRONIZANDO CARGOS");
                     break;
-                case 6:
+                case 4:
                     mProgressDialog.setMessage("SINCRONIZANDO CLIENTES");
                     break;
-                case 7:
+                case 5:
+                    mProgressDialog.setMessage("SINCRONIZANDO EXHIBIDORES");
+                    break;
+                case 6:
                     mProgressDialog.setMessage("SINCRONIZANDO AUTORIZACIONES");
                     break;
+                case 7:
+                    mProgressDialog.setMessage("SINCRONIZANDO BONIFICACIONES");
+                    break;
                 case 8:
-                    mProgressDialog.setMessage("SINCRONIZANDO EXHIBIDORES");
+                    mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
+                    break;
+                case 9:
+                    mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
                     break;
                 default:
                     mProgressDialog.setMessage("CONECTANDO");

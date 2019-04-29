@@ -6,6 +6,7 @@ import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import java.util.ArrayList;
 
 public interface EmployeeService {
+
     ResponseDataWithCode<ArrayList<Employee>> fetch();
 
     Employee getById(int id);
