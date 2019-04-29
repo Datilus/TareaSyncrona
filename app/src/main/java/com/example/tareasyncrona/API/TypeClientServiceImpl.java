@@ -47,7 +47,7 @@ public class TypeClientServiceImpl implements TypeClientService {
             message = response.getError().getMessage();
         }
 
-        if (response.getOkHttpResponse() == null){
+        if (response.getOkHttpResponse() == null) {
             return new ResponseDataWithCode<>(typeClients, 102, message);
         }
 

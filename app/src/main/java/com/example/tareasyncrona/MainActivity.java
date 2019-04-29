@@ -20,6 +20,7 @@ import com.example.tareasyncrona.API.ClientExhibitorServiceImpl;
 import com.example.tareasyncrona.API.ClientProductBonificationServiceImpl;
 import com.example.tareasyncrona.API.ClientServiceImpl;
 import com.example.tareasyncrona.API.EmployeeServiceImpl;
+import com.example.tareasyncrona.API.ExhibitorServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
@@ -30,6 +31,7 @@ import com.example.tareasyncrona.Modelo.jsonModel.ClientAuthorization;
 import com.example.tareasyncrona.Modelo.jsonModel.ClientExhibitor;
 import com.example.tareasyncrona.Modelo.jsonModel.ClientProductBonification;
 import com.example.tareasyncrona.Modelo.jsonModel.Employee;
+import com.example.tareasyncrona.Modelo.jsonModel.Exhibitor;
 import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
@@ -40,6 +42,7 @@ import com.example.tareasyncrona.Modelo.realmModel.ClientAuthorizationEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ClientEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ClientExhibitorEntity;
 import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
+import com.example.tareasyncrona.Modelo.realmModel.ExhibitorEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
@@ -50,6 +53,7 @@ import com.example.tareasyncrona.services.dataBase.ClientExhibitorServiceDatabas
 import com.example.tareasyncrona.services.dataBase.ClientProductBonificationDatabase;
 import com.example.tareasyncrona.services.dataBase.ClientServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.EmployeeServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.ExhibitorServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDatabase;
 import com.example.tareasyncrona.services.interfaces.CediService;
 
@@ -121,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             deleteRealm(ClientProductBonification.class);
             deleteRealm(EmployeeEntity.class);
             deleteRealm(TypeClientEntity.class);
+            deleteRealm(ExhibitorEntity.class);
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
 
@@ -175,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
                         TypeClientServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
+                    case "ExhibitorServiceDatabase": {
+                        ExhibitorServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    }
                     default: {
 
                     }
@@ -226,10 +234,14 @@ public class MainActivity extends AppCompatActivity {
             saveWithStatusCode(clientProductBonifications, ClientProductBonificationDatabase.class);
 
             publishProgress(8);
+            ResponseDataWithCode<ArrayList<Exhibitor>> exhibitors = ExhibitorServiceImpl.getInstance().fetch();
+            saveWithStatusCode(exhibitors, ExhibitorServiceDatabase.class);
+
+            publishProgress(9);
             ResponseDataWithCode<ArrayList<Employee>> employees = EmployeeServiceImpl.getInstance().fetch();
             saveWithStatusCode(employees, EmployeeServiceDatabase.class);
 
-            publishProgress(9);
+            publishProgress(10);
             ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
             saveWithStatusCode(typeClients, TypeClientServiceDatabase.class);
 
@@ -281,9 +293,12 @@ public class MainActivity extends AppCompatActivity {
                     mProgressDialog.setMessage("SINCRONIZANDO BONIFICACIONES");
                     break;
                 case 8:
-                    mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
+                    mProgressDialog.setMessage("SINCRONIZANDO EXHIBIDORES");
                     break;
                 case 9:
+                    mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
+                    break;
+                case 10:
                     mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
                     break;
                 default:
