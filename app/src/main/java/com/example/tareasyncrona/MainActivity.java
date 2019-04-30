@@ -23,6 +23,7 @@ import com.example.tareasyncrona.API.EmployeeServiceImpl;
 import com.example.tareasyncrona.API.ExhibitorServiceImpl;
 import com.example.tareasyncrona.API.FolioServiceImpl;
 import com.example.tareasyncrona.API.FuelTicketServiceImpl;
+import com.example.tareasyncrona.API.LineServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
@@ -36,6 +37,7 @@ import com.example.tareasyncrona.Modelo.jsonModel.Employee;
 import com.example.tareasyncrona.Modelo.jsonModel.Exhibitor;
 import com.example.tareasyncrona.Modelo.jsonModel.Folio;
 import com.example.tareasyncrona.Modelo.jsonModel.FuelTicket;
+import com.example.tareasyncrona.Modelo.jsonModel.Line;
 import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
@@ -50,6 +52,7 @@ import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ExhibitorEntity;
 import com.example.tareasyncrona.Modelo.realmModel.FolioEntity;
 import com.example.tareasyncrona.Modelo.realmModel.FuelTicketEntity;
+import com.example.tareasyncrona.Modelo.realmModel.LineEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
@@ -63,6 +66,7 @@ import com.example.tareasyncrona.services.dataBase.EmployeeServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ExhibitorServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.FolioServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.FuelTicketServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.LineServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDatabase;
 import com.example.tareasyncrona.services.interfaces.CediService;
 
@@ -137,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
             deleteRealm(ExhibitorEntity.class);
             deleteRealm(FolioEntity.class);
             deleteRealm(FuelTicketEntity.class);
+            deleteRealm(LineEntity.class);
             deleteRealm(TypeClientEntity.class);
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
@@ -202,6 +207,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case "FuelTicketServiceDatabase": {
                         FuelTicketServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "LineServiceDatabase": {
+                        LineServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
                     default: {
@@ -271,6 +280,10 @@ public class MainActivity extends AppCompatActivity {
             saveWithStatusCode(fuelTickets, FuelTicketServiceDatabase.class);
 
             publishProgress(12);
+            ResponseDataWithCode<ArrayList<Line>> lines = LineServiceImpl.getInstance().fetch();
+            saveWithStatusCode(lines, LineServiceDatabase.class);
+
+            publishProgress(13);
             ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
             saveWithStatusCode(typeClients, TypeClientServiceDatabase.class);
 
@@ -334,6 +347,9 @@ public class MainActivity extends AppCompatActivity {
                     mProgressDialog.setMessage("SINCRONIZANDO COMBUSTIBLES");
                     break;
                 case 12:
+                    mProgressDialog.setMessage("SINCRONIZANDO LINEAS");
+                    break;
+                case 13:
                     mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
                     break;
                 default:
