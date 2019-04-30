@@ -94,7 +94,8 @@ public class TypeClient {
                     name,
                     active,
                     userRegister,
-                    dateRegister);
+                    dateRegister
+            );
         }
 
         public Builder setIdTypeClient(Integer idTypeClient) {

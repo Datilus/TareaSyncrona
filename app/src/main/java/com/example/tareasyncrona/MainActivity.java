@@ -21,6 +21,8 @@ import com.example.tareasyncrona.API.ClientProductBonificationServiceImpl;
 import com.example.tareasyncrona.API.ClientServiceImpl;
 import com.example.tareasyncrona.API.EmployeeServiceImpl;
 import com.example.tareasyncrona.API.ExhibitorServiceImpl;
+import com.example.tareasyncrona.API.FolioServiceImpl;
+import com.example.tareasyncrona.API.FuelTicketServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
@@ -32,6 +34,8 @@ import com.example.tareasyncrona.Modelo.jsonModel.ClientExhibitor;
 import com.example.tareasyncrona.Modelo.jsonModel.ClientProductBonification;
 import com.example.tareasyncrona.Modelo.jsonModel.Employee;
 import com.example.tareasyncrona.Modelo.jsonModel.Exhibitor;
+import com.example.tareasyncrona.Modelo.jsonModel.Folio;
+import com.example.tareasyncrona.Modelo.jsonModel.FuelTicket;
 import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
@@ -41,8 +45,11 @@ import com.example.tareasyncrona.Modelo.realmModel.ChargeEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ClientAuthorizationEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ClientEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ClientExhibitorEntity;
+import com.example.tareasyncrona.Modelo.realmModel.ClientProductBonificationEntity;
 import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ExhibitorEntity;
+import com.example.tareasyncrona.Modelo.realmModel.FolioEntity;
+import com.example.tareasyncrona.Modelo.realmModel.FuelTicketEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
@@ -54,6 +61,8 @@ import com.example.tareasyncrona.services.dataBase.ClientProductBonificationData
 import com.example.tareasyncrona.services.dataBase.ClientServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.EmployeeServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ExhibitorServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.FolioServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.FuelTicketServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDatabase;
 import com.example.tareasyncrona.services.interfaces.CediService;
 
@@ -61,6 +70,7 @@ import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmObject;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
@@ -100,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void deleteRealm(Class clase){
+    public <T extends RealmObject> void deleteRealm(Class<T> clase){
         try (Realm realmInstance = Realm.getDefaultInstance()) {
             realmInstance.executeTransaction(realm -> realm.delete(clase));
         }
@@ -122,10 +132,12 @@ public class MainActivity extends AppCompatActivity {
             deleteRealm(ClientEntity.class);
             deleteRealm(ClientAuthorizationEntity.class);
             deleteRealm(ClientExhibitorEntity.class);
-            deleteRealm(ClientProductBonification.class);
+            deleteRealm(ClientProductBonificationEntity.class);
             deleteRealm(EmployeeEntity.class);
-            deleteRealm(TypeClientEntity.class);
             deleteRealm(ExhibitorEntity.class);
+            deleteRealm(FolioEntity.class);
+            deleteRealm(FuelTicketEntity.class);
+            deleteRealm(TypeClientEntity.class);
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
 
@@ -182,6 +194,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case "ExhibitorServiceDatabase": {
                         ExhibitorServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "FolioServiceDatabase": {
+                        FolioServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "FuelTicketServiceDatabase": {
+                        FuelTicketServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
                     }
                     default: {
 
@@ -242,6 +263,14 @@ public class MainActivity extends AppCompatActivity {
             saveWithStatusCode(employees, EmployeeServiceDatabase.class);
 
             publishProgress(10);
+            ResponseDataWithCode<ArrayList<Folio>> folios = FolioServiceImpl.getInstance().fetch();
+            saveWithStatusCode(folios, FolioServiceDatabase.class);
+
+            publishProgress(11);
+            ResponseDataWithCode<ArrayList<FuelTicket>> fuelTickets = FuelTicketServiceImpl.getInstance().fetch();
+            saveWithStatusCode(fuelTickets, FuelTicketServiceDatabase.class);
+
+            publishProgress(12);
             ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
             saveWithStatusCode(typeClients, TypeClientServiceDatabase.class);
 
@@ -299,6 +328,12 @@ public class MainActivity extends AppCompatActivity {
                     mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
                     break;
                 case 10:
+                    mProgressDialog.setMessage("SINCRONIZANDO FOLIOS");
+                    break;
+                case 11:
+                    mProgressDialog.setMessage("SINCRONIZANDO COMBUSTIBLES");
+                    break;
+                case 12:
                     mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
                     break;
                 default:
@@ -314,3 +349,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+/*
+Folio
+FuelTicket
+IniciativaCupo
+IniciativaCuponDetalle
+Lines
+MethodPayment
+Payments
+PriceList
+Products
+ProductsRMI
+Routes
+Taxes
+*/
+
