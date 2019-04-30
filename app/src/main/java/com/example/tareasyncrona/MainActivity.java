@@ -24,6 +24,7 @@ import com.example.tareasyncrona.API.ExhibitorServiceImpl;
 import com.example.tareasyncrona.API.FolioServiceImpl;
 import com.example.tareasyncrona.API.FuelTicketServiceImpl;
 import com.example.tareasyncrona.API.LineServiceImpl;
+import com.example.tareasyncrona.API.MethodOfPaymentServiceImp;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
@@ -38,6 +39,7 @@ import com.example.tareasyncrona.Modelo.jsonModel.Exhibitor;
 import com.example.tareasyncrona.Modelo.jsonModel.Folio;
 import com.example.tareasyncrona.Modelo.jsonModel.FuelTicket;
 import com.example.tareasyncrona.Modelo.jsonModel.Line;
+import com.example.tareasyncrona.Modelo.jsonModel.MethodOfPayment;
 import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
@@ -53,6 +55,7 @@ import com.example.tareasyncrona.Modelo.realmModel.ExhibitorEntity;
 import com.example.tareasyncrona.Modelo.realmModel.FolioEntity;
 import com.example.tareasyncrona.Modelo.realmModel.FuelTicketEntity;
 import com.example.tareasyncrona.Modelo.realmModel.LineEntity;
+import com.example.tareasyncrona.Modelo.realmModel.MethodOfPaymentEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
@@ -67,6 +70,7 @@ import com.example.tareasyncrona.services.dataBase.ExhibitorServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.FolioServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.FuelTicketServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.LineServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.MethodOfPaymentServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDatabase;
 import com.example.tareasyncrona.services.interfaces.CediService;
 
@@ -142,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             deleteRealm(FolioEntity.class);
             deleteRealm(FuelTicketEntity.class);
             deleteRealm(LineEntity.class);
+            deleteRealm(MethodOfPaymentEntity.class);
             deleteRealm(TypeClientEntity.class);
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
@@ -211,6 +216,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case "LineServiceDatabase": {
                         LineServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "MethodOfPaymentServiceDatabase": {
+                        MethodOfPaymentServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
                     default: {
@@ -284,6 +293,10 @@ public class MainActivity extends AppCompatActivity {
             saveWithStatusCode(lines, LineServiceDatabase.class);
 
             publishProgress(13);
+            ResponseDataWithCode<ArrayList<MethodOfPayment>> methodOfPayments = MethodOfPaymentServiceImp.getInstance().fetch();
+            saveWithStatusCode(methodOfPayments, MethodOfPaymentServiceDatabase.class);
+
+            publishProgress(14);
             ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
             saveWithStatusCode(typeClients, TypeClientServiceDatabase.class);
 
@@ -294,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(MainActivity.this);
-            mProgressDialog.setTitle("Simulando descarga ...");
+            mProgressDialog.setTitle("Sincronizando ...");
             mProgressDialog.setMessage("CONECTANDO");
             mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
             mProgressDialog.show();
@@ -311,46 +324,49 @@ public class MainActivity extends AppCompatActivity {
             super.onProgressUpdate(values);
             switch (values[0]) {
                 case 0:
-                    mProgressDialog.setMessage("SINCRONIZANDO BANCOS");
+                    mProgressDialog.setMessage("BANCOS");
                     break;
                 case 1:
-                    mProgressDialog.setMessage("SINCRONIZANDO CATALOGO CFDI");
+                    mProgressDialog.setMessage("CATALOGO CFDI");
                     break;
                 case 2:
-                    mProgressDialog.setMessage("SINCRONIZANDO CEDIS");
+                    mProgressDialog.setMessage("CEDIS");
                     break;
                 case 3:
-                    mProgressDialog.setMessage("SINCRONIZANDO CARGOS");
+                    mProgressDialog.setMessage("CARGOS");
                     break;
                 case 4:
-                    mProgressDialog.setMessage("SINCRONIZANDO CLIENTES");
+                    mProgressDialog.setMessage("CLIENTES");
                     break;
                 case 5:
-                    mProgressDialog.setMessage("SINCRONIZANDO EXHIBIDORES");
+                    mProgressDialog.setMessage("EXHIBIDORES");
                     break;
                 case 6:
-                    mProgressDialog.setMessage("SINCRONIZANDO AUTORIZACIONES");
+                    mProgressDialog.setMessage("AUTORIZACIONES");
                     break;
                 case 7:
-                    mProgressDialog.setMessage("SINCRONIZANDO BONIFICACIONES");
+                    mProgressDialog.setMessage("BONIFICACIONES");
                     break;
                 case 8:
-                    mProgressDialog.setMessage("SINCRONIZANDO EXHIBIDORES");
+                    mProgressDialog.setMessage("EXHIBIDORES");
                     break;
                 case 9:
-                    mProgressDialog.setMessage("SINCRONIZANDO EMPLEADOS");
+                    mProgressDialog.setMessage("EMPLEADOS");
                     break;
                 case 10:
-                    mProgressDialog.setMessage("SINCRONIZANDO FOLIOS");
+                    mProgressDialog.setMessage("FOLIOS");
                     break;
                 case 11:
-                    mProgressDialog.setMessage("SINCRONIZANDO COMBUSTIBLES");
+                    mProgressDialog.setMessage("COMBUSTIBLES");
                     break;
                 case 12:
-                    mProgressDialog.setMessage("SINCRONIZANDO LINEAS");
+                    mProgressDialog.setMessage("LINEAS");
                     break;
                 case 13:
-                    mProgressDialog.setMessage("SINCRONIZANDO TIPO DE CLIENTES");
+                    mProgressDialog.setMessage("METODOS DE PAGO");
+                    break;
+                case 14:
+                    mProgressDialog.setMessage("TIPO DE CLIENTES");
                     break;
                 default:
                     mProgressDialog.setMessage("CONECTANDO");
