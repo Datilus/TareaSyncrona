@@ -30,7 +30,7 @@ public class FuelTicketServiceImpl implements FuelTicketService {
 
     @Override
     public ResponseDataWithCode<ArrayList<FuelTicket>> fetch() {
-        ANRequest request = AndroidNetworking.get("http://172.16.1.2:8000/api/route/9/fuels")
+        ANRequest request = AndroidNetworking.get("http://172.16.1.2:8000/api/route/4/fuels")
                 .build();
 
         ANResponse<ResponseList<FuelTicket>> response = request.executeForObject(ResponseList.class);
