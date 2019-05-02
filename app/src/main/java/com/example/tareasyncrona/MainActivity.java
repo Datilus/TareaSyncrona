@@ -27,6 +27,7 @@ import com.example.tareasyncrona.API.LineServiceImpl;
 import com.example.tareasyncrona.API.MethodOfPaymentServiceImp;
 import com.example.tareasyncrona.API.PaymentServiceImpl;
 import com.example.tareasyncrona.API.PriceServiceImpl;
+import com.example.tareasyncrona.API.ProductServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
@@ -44,6 +45,7 @@ import com.example.tareasyncrona.Modelo.jsonModel.Line;
 import com.example.tareasyncrona.Modelo.jsonModel.MethodOfPayment;
 import com.example.tareasyncrona.Modelo.jsonModel.Payment;
 import com.example.tareasyncrona.Modelo.jsonModel.Price;
+import com.example.tareasyncrona.Modelo.jsonModel.Product;
 import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
@@ -62,6 +64,7 @@ import com.example.tareasyncrona.Modelo.realmModel.LineEntity;
 import com.example.tareasyncrona.Modelo.realmModel.MethodOfPaymentEntity;
 import com.example.tareasyncrona.Modelo.realmModel.PaymentEntity;
 import com.example.tareasyncrona.Modelo.realmModel.PriceEntity;
+import com.example.tareasyncrona.Modelo.realmModel.ProductEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
@@ -79,6 +82,7 @@ import com.example.tareasyncrona.services.dataBase.LineServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.MethodOfPaymentServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.PaymentServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.PriceServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.ProductServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDatabase;
 
 import java.util.ArrayList;
@@ -155,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
             deleteRealm(MethodOfPaymentEntity.class);
             deleteRealm(PaymentEntity.class);
             deleteRealm(PriceEntity.class);
+            deleteRealm(ProductEntity.class);
             deleteRealm(TypeClientEntity.class);
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
@@ -236,6 +241,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case "PriceServiceDatabase": {
                         PriceServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "ProductServiceDatabase": {
+                        ProductServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
                     default: {
@@ -320,6 +329,10 @@ public class MainActivity extends AppCompatActivity {
             ResponseDataWithCode<ArrayList<Price>> prices = PriceServiceImpl.getInstance().fetch();
             saveWithStatusCode(prices, PriceServiceDatabase.class);
 
+            publishProgress(16);
+            ResponseDataWithCode<ArrayList<Product>> products = ProductServiceImpl.getInstance().fetch();
+            saveWithStatusCode(products, ProductServiceDatabase.class);
+
             publishProgress(20);
             ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
             saveWithStatusCode(typeClients, TypeClientServiceDatabase.class);
@@ -394,6 +407,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 15:
                     mProgressDialog.setMessage("LISTA DE PRECIOS");
+                    break;
+                case 16:
+                    mProgressDialog.setMessage("PRODUCTOS");
                     break;
                 case 20:
                     mProgressDialog.setMessage("TIPO DE CLIENTES");
