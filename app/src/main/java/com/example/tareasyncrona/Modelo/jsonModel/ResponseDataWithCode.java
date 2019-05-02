@@ -20,11 +20,11 @@ public class ResponseDataWithCode<T> {
         return data;
     }
 
-    public Cedi getDataAsObject(){
+    public Cedi getDataAsObject() {
         return (Cedi) data;
     }
 
-    public ArrayList getDataAsArray(){
+    public ArrayList getDataAsArray() {
         return (ArrayList) data;
     }
 

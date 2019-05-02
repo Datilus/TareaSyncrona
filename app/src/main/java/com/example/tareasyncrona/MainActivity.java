@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public <T extends RealmObject> void deleteRealm(Class<T> clase){
+    public <T extends RealmObject> void deleteRealm(Class<T> clase) {
         try (Realm realmInstance = Realm.getDefaultInstance()) {
             realmInstance.executeTransaction(realm -> realm.delete(clase));
         }
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case "PaymentServiceDatabase": {
-                        System.out.println(responseDataWithCode.getDataAsArray().size()); //Recibo arreglo de 11
+                        System.out.println(responseDataWithCode.getDataAsArray().size());
                         PaymentServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
