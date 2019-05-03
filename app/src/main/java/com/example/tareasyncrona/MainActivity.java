@@ -30,6 +30,7 @@ import com.example.tareasyncrona.API.PriceServiceImpl;
 import com.example.tareasyncrona.API.ProductRMIServiceImpl;
 import com.example.tareasyncrona.API.ProductServiceImpl;
 import com.example.tareasyncrona.API.RouteServiceImpl;
+import com.example.tareasyncrona.API.TaxServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
@@ -51,6 +52,7 @@ import com.example.tareasyncrona.Modelo.jsonModel.Product;
 import com.example.tareasyncrona.Modelo.jsonModel.ProductRMI;
 import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
 import com.example.tareasyncrona.Modelo.jsonModel.Route;
+import com.example.tareasyncrona.Modelo.jsonModel.Tax;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
 import com.example.tareasyncrona.Modelo.realmModel.CatalogueCFDIEntity;
@@ -71,6 +73,7 @@ import com.example.tareasyncrona.Modelo.realmModel.PriceEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ProductEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ProductRMIEntity;
 import com.example.tareasyncrona.Modelo.realmModel.RouteEntity;
+import com.example.tareasyncrona.Modelo.realmModel.TaxEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
@@ -91,8 +94,8 @@ import com.example.tareasyncrona.services.dataBase.PriceServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ProductRMIServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ProductServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.RouteServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.TaxServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDatabase;
-import com.example.tareasyncrona.services.interfaces.ProductRMIService;
 
 import java.util.ArrayList;
 
@@ -171,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
             deleteRealm(ProductEntity.class);
             deleteRealm(ProductRMIEntity.class);
             deleteRealm(RouteEntity.class);
+            deleteRealm(TaxEntity.class);
             deleteRealm(TypeClientEntity.class);
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
@@ -194,8 +198,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case "CediServiceDatabase": {
-                        CediServiceDatabase.getInstance().addObject(responseDataWithCode.getDataAsObject());
-//                        CediServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        CediServiceDatabase.getInstance().addObject(responseDataWithCode.getDataAsCedi());
                         break;
                     }
                     case "ChargeServiceDatabase": {
@@ -266,6 +269,10 @@ public class MainActivity extends AppCompatActivity {
                         RouteServiceDatabase.getInstance().addObject(responseDataWithCode.getDataAsRoute());
                         break;
                     }
+                    case "TaxServiceDatabase": {
+                        TaxServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
                     default: {
 
                     }
@@ -287,10 +294,6 @@ public class MainActivity extends AppCompatActivity {
             publishProgress(1);
             ResponseDataWithCode<ArrayList<CatalogueCFDI>> catalogueCFDIs = CatalogueCFDIServiceImpl.getInstance().fetch();
             saveWithStatusCode(catalogueCFDIs, CatalogueCFDIServiceDatabase.class);
-
-//            publishProgress(2);
-//            ResponseDataWithCode<ArrayList<Cedi>> cedis = CediServiceImpl.getInstance().jalar();
-//            saveWithStatusCode(cedis, CediServiceDatabase.class);
 
             publishProgress(2);
             ResponseDataWithCode<Cedi> cedi = CediServiceImpl.getInstance().fetch();
@@ -359,6 +362,10 @@ public class MainActivity extends AppCompatActivity {
             publishProgress(18);
             ResponseDataWithCode<Route> route = RouteServiceImpl.getInstance().fetch();
             saveWithStatusCode(route, RouteServiceDatabase.class);
+
+            publishProgress(19);
+            ResponseDataWithCode<ArrayList<Tax>> taxes = TaxServiceImpl.getInstance().fetch();
+            saveWithStatusCode(taxes, TaxServiceDatabase.class);
 
             publishProgress(20);
             ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
@@ -444,6 +451,9 @@ public class MainActivity extends AppCompatActivity {
                 case 18:
                     mProgressDialog.setMessage("RUTA");
                     break;
+                case 19:
+                    mProgressDialog.setMessage("IMPUESTOS");
+                    break;
                 case 20:
                     mProgressDialog.setMessage("TIPO DE CLIENTES");
                     break;
@@ -460,18 +470,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-/*
-Folio
-FuelTicket
-IniciativaCupo
-IniciativaCuponDetalle
-Lines
-MethodPayment
-Payments
-PriceList
-Products
-ProductsRMI
-Routes
-Taxes
-*/
+
 

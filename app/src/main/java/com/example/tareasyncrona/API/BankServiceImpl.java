@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class BankServiceImpl implements BankService {
@@ -57,6 +58,30 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void addList(ArrayList<Bank> banks) {
-
     }
+
+//    public ResponseDataWithCode<ArrayList> infoManager(Class clase, ANRequest anRequest) {
+//
+//        ANResponse<ResponseList<clase>> response = anRequest.executeForObject(ResponseList.class);
+//
+//        ArrayList<clase> banks = null;
+//        String message;
+//
+//        if (response.isSuccess() && response.getResult().getData() != null) {
+//            banks = new GsonBuilder()
+//                    .create()
+//                    .fromJson(new Gson().toJsonTree(response.getResult().getData()),
+//                            new TypeToken<ArrayList<clase>>() {
+//                            }.getType());
+//            message = response.getResult().getMessage();
+//        } else {
+//            message = response.getError().getMessage();
+//        }
+//
+//        if (response.getOkHttpResponse() == null) {
+//            return new ResponseDataWithCode<>(banks, 102, message);
+//        }
+//
+//        return new ResponseDataWithCode<>(banks, response.getOkHttpResponse().code(), message);
+//    }
 }

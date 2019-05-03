@@ -20,7 +20,7 @@ public class ResponseDataWithCode<T> {
         return data;
     }
 
-    public Cedi getDataAsObject() {
+    public Cedi getDataAsCedi() {
         return (Cedi) data;
     }
 
