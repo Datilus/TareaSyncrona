@@ -24,6 +24,10 @@ public class ResponseDataWithCode<T> {
         return (Cedi) data;
     }
 
+    public Route getDataAsRoute() {
+        return (Route) data;
+    }
+
     public ArrayList getDataAsArray() {
         return (ArrayList) data;
     }

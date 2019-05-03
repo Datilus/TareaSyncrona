@@ -29,6 +29,7 @@ import com.example.tareasyncrona.API.PaymentServiceImpl;
 import com.example.tareasyncrona.API.PriceServiceImpl;
 import com.example.tareasyncrona.API.ProductRMIServiceImpl;
 import com.example.tareasyncrona.API.ProductServiceImpl;
+import com.example.tareasyncrona.API.RouteServiceImpl;
 import com.example.tareasyncrona.API.TypeClientServiceImpl;
 import com.example.tareasyncrona.Modelo.jsonModel.Bank;
 import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
@@ -49,6 +50,7 @@ import com.example.tareasyncrona.Modelo.jsonModel.Price;
 import com.example.tareasyncrona.Modelo.jsonModel.Product;
 import com.example.tareasyncrona.Modelo.jsonModel.ProductRMI;
 import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
+import com.example.tareasyncrona.Modelo.jsonModel.Route;
 import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
 import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
 import com.example.tareasyncrona.Modelo.realmModel.CatalogueCFDIEntity;
@@ -68,6 +70,7 @@ import com.example.tareasyncrona.Modelo.realmModel.PaymentEntity;
 import com.example.tareasyncrona.Modelo.realmModel.PriceEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ProductEntity;
 import com.example.tareasyncrona.Modelo.realmModel.ProductRMIEntity;
+import com.example.tareasyncrona.Modelo.realmModel.RouteEntity;
 import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
@@ -87,6 +90,7 @@ import com.example.tareasyncrona.services.dataBase.PaymentServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.PriceServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ProductRMIServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ProductServiceDatabase;
+import com.example.tareasyncrona.services.dataBase.RouteServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.TypeClientServiceDatabase;
 import com.example.tareasyncrona.services.interfaces.ProductRMIService;
 
@@ -166,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
             deleteRealm(PriceEntity.class);
             deleteRealm(ProductEntity.class);
             deleteRealm(ProductRMIEntity.class);
+            deleteRealm(RouteEntity.class);
             deleteRealm(TypeClientEntity.class);
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
@@ -255,6 +260,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case "ProductRMIServiceDatabase": {
                         ProductRMIServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "RouteServiceDatabase": {
+                        RouteServiceDatabase.getInstance().addObject(responseDataWithCode.getDataAsRoute());
                         break;
                     }
                     default: {
@@ -347,6 +356,10 @@ public class MainActivity extends AppCompatActivity {
             ResponseDataWithCode<ArrayList<ProductRMI>> productsRMI = ProductRMIServiceImpl.getInstance().fetch();
             saveWithStatusCode(productsRMI, ProductRMIServiceDatabase.class);
 
+            publishProgress(18);
+            ResponseDataWithCode<Route> route = RouteServiceImpl.getInstance().fetch();
+            saveWithStatusCode(route, RouteServiceDatabase.class);
+
             publishProgress(20);
             ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
             saveWithStatusCode(typeClients, TypeClientServiceDatabase.class);
@@ -427,6 +440,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 17:
                     mProgressDialog.setMessage("RMI");
+                    break;
+                case 18:
+                    mProgressDialog.setMessage("RUTA");
                     break;
                 case 20:
                     mProgressDialog.setMessage("TIPO DE CLIENTES");
