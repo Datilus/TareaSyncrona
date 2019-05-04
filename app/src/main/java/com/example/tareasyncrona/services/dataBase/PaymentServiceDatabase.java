@@ -1,9 +1,9 @@
 package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
-import com.example.tareasyncrona.Modelo.jsonModel.Payment;
-import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
-import com.example.tareasyncrona.Modelo.realmModel.PaymentEntity;
+import com.example.tareasyncrona.modelo.jsonModel.Payment;
+import com.example.tareasyncrona.modelo.jsonModel.ResponseDataWithCode;
+import com.example.tareasyncrona.modelo.realmModel.PaymentEntity;
 import com.example.tareasyncrona.services.interfaces.PaymentService;
 
 import java.util.ArrayList;

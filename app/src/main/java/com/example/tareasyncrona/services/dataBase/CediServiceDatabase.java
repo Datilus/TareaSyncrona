@@ -1,9 +1,9 @@
 package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
-import com.example.tareasyncrona.Modelo.jsonModel.Cedi;
-import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
-import com.example.tareasyncrona.Modelo.realmModel.CediEntity;
+import com.example.tareasyncrona.modelo.jsonModel.Cedi;
+import com.example.tareasyncrona.modelo.jsonModel.ResponseDataWithCode;
+import com.example.tareasyncrona.modelo.realmModel.CediEntity;
 import com.example.tareasyncrona.services.interfaces.CediService;
 
 import java.util.ArrayList;

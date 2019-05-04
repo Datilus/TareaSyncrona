@@ -1,9 +1,9 @@
 package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
-import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
-import com.example.tareasyncrona.Modelo.jsonModel.Route;
-import com.example.tareasyncrona.Modelo.realmModel.RouteEntity;
+import com.example.tareasyncrona.modelo.jsonModel.ResponseDataWithCode;
+import com.example.tareasyncrona.modelo.jsonModel.Route;
+import com.example.tareasyncrona.modelo.realmModel.RouteEntity;
 import com.example.tareasyncrona.services.interfaces.RouteService;
 
 import java.util.List;

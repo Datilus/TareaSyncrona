@@ -1,9 +1,9 @@
 package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
-import com.example.tareasyncrona.Modelo.jsonModel.Line;
-import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
-import com.example.tareasyncrona.Modelo.realmModel.LineEntity;
+import com.example.tareasyncrona.modelo.jsonModel.Line;
+import com.example.tareasyncrona.modelo.jsonModel.ResponseDataWithCode;
+import com.example.tareasyncrona.modelo.realmModel.LineEntity;
 import com.example.tareasyncrona.services.interfaces.LineService;
 
 import java.util.ArrayList;

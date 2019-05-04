@@ -1,7 +1,7 @@
 package com.example.tareasyncrona.services.interfaces;
 
-import com.example.tareasyncrona.Modelo.jsonModel.ClientAuthorization;
-import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
+import com.example.tareasyncrona.modelo.jsonModel.ClientAuthorization;
+import com.example.tareasyncrona.modelo.jsonModel.ResponseDataWithCode;
 
 import java.util.ArrayList;
 

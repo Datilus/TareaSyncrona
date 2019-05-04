@@ -1,9 +1,9 @@
 package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
-import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
-import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
-import com.example.tareasyncrona.Modelo.realmModel.CatalogueCFDIEntity;
+import com.example.tareasyncrona.modelo.jsonModel.CatalogueCFDI;
+import com.example.tareasyncrona.modelo.jsonModel.ResponseDataWithCode;
+import com.example.tareasyncrona.modelo.realmModel.CatalogueCFDIEntity;
 import com.example.tareasyncrona.services.interfaces.CatalogueCFDIService;
 
 import java.util.ArrayList;

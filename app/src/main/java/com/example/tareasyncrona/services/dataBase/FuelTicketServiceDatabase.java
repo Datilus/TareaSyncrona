@@ -1,9 +1,9 @@
 package com.example.tareasyncrona.services.dataBase;
 
 import com.annimon.stream.Stream;
-import com.example.tareasyncrona.Modelo.jsonModel.FuelTicket;
-import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
-import com.example.tareasyncrona.Modelo.realmModel.FuelTicketEntity;
+import com.example.tareasyncrona.modelo.jsonModel.FuelTicket;
+import com.example.tareasyncrona.modelo.jsonModel.ResponseDataWithCode;
+import com.example.tareasyncrona.modelo.realmModel.FuelTicketEntity;
 import com.example.tareasyncrona.services.interfaces.FuelTicketService;
 
 import java.util.ArrayList;

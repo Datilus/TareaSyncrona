@@ -11,77 +11,77 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
-import com.example.tareasyncrona.API.BankServiceImpl;
-import com.example.tareasyncrona.API.CatalogueCFDIServiceImpl;
-import com.example.tareasyncrona.API.CediServiceImpl;
-import com.example.tareasyncrona.API.ChargeServiceImpl;
-import com.example.tareasyncrona.API.ClientAuthorizationServiceImpl;
-import com.example.tareasyncrona.API.ClientExhibitorServiceImpl;
-import com.example.tareasyncrona.API.ClientProductBonificationServiceImpl;
-import com.example.tareasyncrona.API.ClientServiceImpl;
-import com.example.tareasyncrona.API.EmployeeServiceImpl;
-import com.example.tareasyncrona.API.ExhibitorServiceImpl;
-import com.example.tareasyncrona.API.FolioServiceImpl;
-import com.example.tareasyncrona.API.FuelTicketServiceImpl;
-import com.example.tareasyncrona.API.LineServiceImpl;
-import com.example.tareasyncrona.API.MethodOfPaymentServiceImp;
-import com.example.tareasyncrona.API.PaymentServiceImpl;
-import com.example.tareasyncrona.API.PriceServiceImpl;
-import com.example.tareasyncrona.API.ProductRMIServiceImpl;
-import com.example.tareasyncrona.API.ProductServiceImpl;
-import com.example.tareasyncrona.API.RouteServiceImpl;
-import com.example.tareasyncrona.API.TaxServiceImpl;
-import com.example.tareasyncrona.API.TypeClientServiceImpl;
-import com.example.tareasyncrona.Modelo.jsonModel.Bank;
-import com.example.tareasyncrona.Modelo.jsonModel.CatalogueCFDI;
-import com.example.tareasyncrona.Modelo.jsonModel.Cedi;
-import com.example.tareasyncrona.Modelo.jsonModel.Charge;
-import com.example.tareasyncrona.Modelo.jsonModel.Client;
-import com.example.tareasyncrona.Modelo.jsonModel.ClientAuthorization;
-import com.example.tareasyncrona.Modelo.jsonModel.ClientExhibitor;
-import com.example.tareasyncrona.Modelo.jsonModel.ClientProductBonification;
-import com.example.tareasyncrona.Modelo.jsonModel.Employee;
-import com.example.tareasyncrona.Modelo.jsonModel.Exhibitor;
-import com.example.tareasyncrona.Modelo.jsonModel.Folio;
-import com.example.tareasyncrona.Modelo.jsonModel.FuelTicket;
-import com.example.tareasyncrona.Modelo.jsonModel.Line;
-import com.example.tareasyncrona.Modelo.jsonModel.MethodOfPayment;
-import com.example.tareasyncrona.Modelo.jsonModel.Payment;
-import com.example.tareasyncrona.Modelo.jsonModel.Price;
-import com.example.tareasyncrona.Modelo.jsonModel.Product;
-import com.example.tareasyncrona.Modelo.jsonModel.ProductRMI;
-import com.example.tareasyncrona.Modelo.jsonModel.ResponseDataWithCode;
-import com.example.tareasyncrona.Modelo.jsonModel.Route;
-import com.example.tareasyncrona.Modelo.jsonModel.Tax;
-import com.example.tareasyncrona.Modelo.jsonModel.TypeClient;
-import com.example.tareasyncrona.Modelo.realmModel.BankEntity;
-import com.example.tareasyncrona.Modelo.realmModel.CatalogueCFDIEntity;
-import com.example.tareasyncrona.Modelo.realmModel.CediEntity;
-import com.example.tareasyncrona.Modelo.realmModel.ChargeEntity;
-import com.example.tareasyncrona.Modelo.realmModel.ClientAuthorizationEntity;
-import com.example.tareasyncrona.Modelo.realmModel.ClientEntity;
-import com.example.tareasyncrona.Modelo.realmModel.ClientExhibitorEntity;
-import com.example.tareasyncrona.Modelo.realmModel.ClientProductBonificationEntity;
-import com.example.tareasyncrona.Modelo.realmModel.EmployeeEntity;
-import com.example.tareasyncrona.Modelo.realmModel.ExhibitorEntity;
-import com.example.tareasyncrona.Modelo.realmModel.FolioEntity;
-import com.example.tareasyncrona.Modelo.realmModel.FuelTicketEntity;
-import com.example.tareasyncrona.Modelo.realmModel.LineEntity;
-import com.example.tareasyncrona.Modelo.realmModel.MethodOfPaymentEntity;
-import com.example.tareasyncrona.Modelo.realmModel.PaymentEntity;
-import com.example.tareasyncrona.Modelo.realmModel.PriceEntity;
-import com.example.tareasyncrona.Modelo.realmModel.ProductEntity;
-import com.example.tareasyncrona.Modelo.realmModel.ProductRMIEntity;
-import com.example.tareasyncrona.Modelo.realmModel.RouteEntity;
-import com.example.tareasyncrona.Modelo.realmModel.TaxEntity;
-import com.example.tareasyncrona.Modelo.realmModel.TypeClientEntity;
+import com.example.tareasyncrona.api.BankServiceImpl;
+import com.example.tareasyncrona.api.CatalogueCFDIServiceImpl;
+import com.example.tareasyncrona.api.CediServiceImpl;
+import com.example.tareasyncrona.api.ChargeServiceImpl;
+import com.example.tareasyncrona.api.ClientAuthorizationServiceImpl;
+import com.example.tareasyncrona.api.ClientExhibitorServiceImpl;
+import com.example.tareasyncrona.api.ClientProductBonificationServiceImpl;
+import com.example.tareasyncrona.api.ClientServiceImpl;
+import com.example.tareasyncrona.api.EmployeeServiceImpl;
+import com.example.tareasyncrona.api.ExhibitorServiceImpl;
+import com.example.tareasyncrona.api.FolioServiceImpl;
+import com.example.tareasyncrona.api.FuelTicketServiceImpl;
+import com.example.tareasyncrona.api.LineServiceImpl;
+import com.example.tareasyncrona.api.MethodOfPaymentServiceImp;
+import com.example.tareasyncrona.api.PaymentServiceImpl;
+import com.example.tareasyncrona.api.PriceServiceImpl;
+import com.example.tareasyncrona.api.ProductRMIServiceImpl;
+import com.example.tareasyncrona.api.ProductServiceImpl;
+import com.example.tareasyncrona.api.RouteServiceImpl;
+import com.example.tareasyncrona.api.TaxServiceImpl;
+import com.example.tareasyncrona.api.TypeClientServiceImpl;
+import com.example.tareasyncrona.modelo.jsonModel.Bank;
+import com.example.tareasyncrona.modelo.jsonModel.CatalogueCFDI;
+import com.example.tareasyncrona.modelo.jsonModel.Cedi;
+import com.example.tareasyncrona.modelo.jsonModel.Charge;
+import com.example.tareasyncrona.modelo.jsonModel.Client;
+import com.example.tareasyncrona.modelo.jsonModel.ClientAuthorization;
+import com.example.tareasyncrona.modelo.jsonModel.ClientExhibitor;
+import com.example.tareasyncrona.modelo.jsonModel.ClientProductBonification;
+import com.example.tareasyncrona.modelo.jsonModel.Employee;
+import com.example.tareasyncrona.modelo.jsonModel.Exhibitor;
+import com.example.tareasyncrona.modelo.jsonModel.Folio;
+import com.example.tareasyncrona.modelo.jsonModel.FuelTicket;
+import com.example.tareasyncrona.modelo.jsonModel.Line;
+import com.example.tareasyncrona.modelo.jsonModel.MethodOfPayment;
+import com.example.tareasyncrona.modelo.jsonModel.Payment;
+import com.example.tareasyncrona.modelo.jsonModel.Price;
+import com.example.tareasyncrona.modelo.jsonModel.Product;
+import com.example.tareasyncrona.modelo.jsonModel.ProductRMI;
+import com.example.tareasyncrona.modelo.jsonModel.ResponseDataWithCode;
+import com.example.tareasyncrona.modelo.jsonModel.Route;
+import com.example.tareasyncrona.modelo.jsonModel.Tax;
+import com.example.tareasyncrona.modelo.jsonModel.TypeClient;
+import com.example.tareasyncrona.modelo.realmModel.BankEntity;
+import com.example.tareasyncrona.modelo.realmModel.CatalogueCFDIEntity;
+import com.example.tareasyncrona.modelo.realmModel.CediEntity;
+import com.example.tareasyncrona.modelo.realmModel.ChargeEntity;
+import com.example.tareasyncrona.modelo.realmModel.ClientAuthorizationEntity;
+import com.example.tareasyncrona.modelo.realmModel.ClientEntity;
+import com.example.tareasyncrona.modelo.realmModel.ClientExhibitorEntity;
+import com.example.tareasyncrona.modelo.realmModel.ClientProductBonificationEntity;
+import com.example.tareasyncrona.modelo.realmModel.EmployeeEntity;
+import com.example.tareasyncrona.modelo.realmModel.ExhibitorEntity;
+import com.example.tareasyncrona.modelo.realmModel.FolioEntity;
+import com.example.tareasyncrona.modelo.realmModel.FuelTicketEntity;
+import com.example.tareasyncrona.modelo.realmModel.LineEntity;
+import com.example.tareasyncrona.modelo.realmModel.MethodOfPaymentEntity;
+import com.example.tareasyncrona.modelo.realmModel.PaymentEntity;
+import com.example.tareasyncrona.modelo.realmModel.PriceEntity;
+import com.example.tareasyncrona.modelo.realmModel.ProductEntity;
+import com.example.tareasyncrona.modelo.realmModel.ProductRMIEntity;
+import com.example.tareasyncrona.modelo.realmModel.RouteEntity;
+import com.example.tareasyncrona.modelo.realmModel.TaxEntity;
+import com.example.tareasyncrona.modelo.realmModel.TypeClientEntity;
 import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.CediServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ChargeServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ClientAuthorizationServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ClientExhibitorServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.ClientProductBonificationDatabase;
+import com.example.tareasyncrona.services.dataBase.ClientProductBonificationServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ClientServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.EmployeeServiceDatabase;
 import com.example.tareasyncrona.services.dataBase.ExhibitorServiceDatabase;
@@ -146,6 +146,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void dropAllData() {
+        deleteRealm(BankEntity.class);
+        deleteRealm(CatalogueCFDIEntity.class);
+        deleteRealm(CediEntity.class);
+        deleteRealm(ChargeEntity.class);
+        deleteRealm(ClientEntity.class);
+        deleteRealm(ClientAuthorizationEntity.class);
+        deleteRealm(ClientExhibitorEntity.class);
+        deleteRealm(ClientProductBonificationEntity.class);
+        deleteRealm(EmployeeEntity.class);
+        deleteRealm(ExhibitorEntity.class);
+        deleteRealm(FolioEntity.class);
+        deleteRealm(FuelTicketEntity.class);
+        deleteRealm(LineEntity.class);
+        deleteRealm(MethodOfPaymentEntity.class);
+        deleteRealm(PaymentEntity.class);
+        deleteRealm(PriceEntity.class);
+        deleteRealm(ProductEntity.class);
+        deleteRealm(ProductRMIEntity.class);
+        deleteRealm(RouteEntity.class);
+        deleteRealm(TaxEntity.class);
+        deleteRealm(TypeClientEntity.class);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -155,27 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            deleteRealm(BankEntity.class);
-            deleteRealm(CatalogueCFDIEntity.class);
-            deleteRealm(CediEntity.class);
-            deleteRealm(ChargeEntity.class);
-            deleteRealm(ClientEntity.class);
-            deleteRealm(ClientAuthorizationEntity.class);
-            deleteRealm(ClientExhibitorEntity.class);
-            deleteRealm(ClientProductBonificationEntity.class);
-            deleteRealm(EmployeeEntity.class);
-            deleteRealm(ExhibitorEntity.class);
-            deleteRealm(FolioEntity.class);
-            deleteRealm(FuelTicketEntity.class);
-            deleteRealm(LineEntity.class);
-            deleteRealm(MethodOfPaymentEntity.class);
-            deleteRealm(PaymentEntity.class);
-            deleteRealm(PriceEntity.class);
-            deleteRealm(ProductEntity.class);
-            deleteRealm(ProductRMIEntity.class);
-            deleteRealm(RouteEntity.class);
-            deleteRealm(TaxEntity.class);
-            deleteRealm(TypeClientEntity.class);
+            dropAllData();
             Toast.makeText(this, "Se borro la informacion de las tablas", Toast.LENGTH_SHORT).show();
         }
 
@@ -217,8 +221,8 @@ public class MainActivity extends AppCompatActivity {
                         ClientServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "ClientProductBonificationDatabase": {
-                        ClientProductBonificationDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "ClientProductBonificationServiceDatabase": {
+                        ClientProductBonificationServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
                     case "EmployeeServiceDatabase": {
@@ -317,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
 
             publishProgress(7);
             ResponseDataWithCode<ArrayList<ClientProductBonification>> clientProductBonifications = ClientProductBonificationServiceImpl.getInstance().fetch();
-            saveWithStatusCode(clientProductBonifications, ClientProductBonificationDatabase.class);
+            saveWithStatusCode(clientProductBonifications, ClientProductBonificationServiceDatabase.class);
 
             publishProgress(8);
             ResponseDataWithCode<ArrayList<Exhibitor>> exhibitors = ExhibitorServiceImpl.getInstance().fetch();
