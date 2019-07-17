@@ -11,97 +11,103 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
-import com.example.tareasyncrona.api.BankServiceImpl;
-import com.example.tareasyncrona.api.CatalogueCFDIServiceImpl;
-import com.example.tareasyncrona.api.CediServiceImpl;
-import com.example.tareasyncrona.api.ChargeServiceImpl;
-import com.example.tareasyncrona.api.ClientAuthorizationServiceImpl;
-import com.example.tareasyncrona.api.ClientExhibitorServiceImpl;
-import com.example.tareasyncrona.api.ClientProductBonificationServiceImpl;
-import com.example.tareasyncrona.api.ClientServiceImpl;
-import com.example.tareasyncrona.api.EmployeeServiceImpl;
-import com.example.tareasyncrona.api.ExhibitorServiceImpl;
-import com.example.tareasyncrona.api.FolioServiceImpl;
-import com.example.tareasyncrona.api.FuelTicketServiceImpl;
-import com.example.tareasyncrona.api.LineServiceImpl;
-import com.example.tareasyncrona.api.MethodOfPaymentServiceImp;
-import com.example.tareasyncrona.api.PaymentServiceImpl;
-import com.example.tareasyncrona.api.PriceServiceImpl;
-import com.example.tareasyncrona.api.ProductRMIServiceImpl;
-import com.example.tareasyncrona.api.ProductServiceImpl;
-import com.example.tareasyncrona.api.RouteServiceImpl;
-import com.example.tareasyncrona.api.TaxServiceImpl;
-import com.example.tareasyncrona.api.TypeClientServiceImpl;
-import com.example.tareasyncrona.modelo.jsonModel.Bank;
-import com.example.tareasyncrona.modelo.jsonModel.CatalogueCFDI;
-import com.example.tareasyncrona.modelo.jsonModel.Cedi;
-import com.example.tareasyncrona.modelo.jsonModel.Charge;
-import com.example.tareasyncrona.modelo.jsonModel.Client;
-import com.example.tareasyncrona.modelo.jsonModel.ClientAuthorization;
-import com.example.tareasyncrona.modelo.jsonModel.ClientExhibitor;
-import com.example.tareasyncrona.modelo.jsonModel.ClientProductBonification;
-import com.example.tareasyncrona.modelo.jsonModel.Employee;
-import com.example.tareasyncrona.modelo.jsonModel.Exhibitor;
-import com.example.tareasyncrona.modelo.jsonModel.Folio;
-import com.example.tareasyncrona.modelo.jsonModel.FuelTicket;
-import com.example.tareasyncrona.modelo.jsonModel.Line;
-import com.example.tareasyncrona.modelo.jsonModel.MethodOfPayment;
-import com.example.tareasyncrona.modelo.jsonModel.Payment;
-import com.example.tareasyncrona.modelo.jsonModel.Price;
-import com.example.tareasyncrona.modelo.jsonModel.Product;
-import com.example.tareasyncrona.modelo.jsonModel.ProductRMI;
-import com.example.tareasyncrona.modelo.jsonModel.ResponseDataWithCode;
-import com.example.tareasyncrona.modelo.jsonModel.Route;
-import com.example.tareasyncrona.modelo.jsonModel.Tax;
-import com.example.tareasyncrona.modelo.jsonModel.TypeClient;
-import com.example.tareasyncrona.modelo.realmModel.BankEntity;
-import com.example.tareasyncrona.modelo.realmModel.CatalogueCFDIEntity;
-import com.example.tareasyncrona.modelo.realmModel.CediEntity;
-import com.example.tareasyncrona.modelo.realmModel.ChargeEntity;
-import com.example.tareasyncrona.modelo.realmModel.ClientAuthorizationEntity;
-import com.example.tareasyncrona.modelo.realmModel.ClientEntity;
-import com.example.tareasyncrona.modelo.realmModel.ClientExhibitorEntity;
-import com.example.tareasyncrona.modelo.realmModel.ClientProductBonificationEntity;
-import com.example.tareasyncrona.modelo.realmModel.EmployeeEntity;
-import com.example.tareasyncrona.modelo.realmModel.ExhibitorEntity;
-import com.example.tareasyncrona.modelo.realmModel.FolioEntity;
-import com.example.tareasyncrona.modelo.realmModel.FuelTicketEntity;
-import com.example.tareasyncrona.modelo.realmModel.LineEntity;
-import com.example.tareasyncrona.modelo.realmModel.MethodOfPaymentEntity;
-import com.example.tareasyncrona.modelo.realmModel.PaymentEntity;
-import com.example.tareasyncrona.modelo.realmModel.PriceEntity;
-import com.example.tareasyncrona.modelo.realmModel.ProductEntity;
-import com.example.tareasyncrona.modelo.realmModel.ProductRMIEntity;
-import com.example.tareasyncrona.modelo.realmModel.RouteEntity;
-import com.example.tareasyncrona.modelo.realmModel.TaxEntity;
-import com.example.tareasyncrona.modelo.realmModel.TypeClientEntity;
-import com.example.tareasyncrona.services.dataBase.BankServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.CatalogueCFDIServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.CediServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.ChargeServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.ClientAuthorizationServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.ClientExhibitorServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.ClientProductBonificationServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.ClientServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.EmployeeServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.ExhibitorServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.FolioServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.FuelTicketServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.LineServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.MethodOfPaymentServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.PaymentServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.PriceServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.ProductRMIServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.ProductServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.RouteServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.TaxServiceDatabase;
-import com.example.tareasyncrona.services.dataBase.TypeClientServiceDatabase;
+import com.example.tareasyncrona.data.api.FormVisit;
+import com.example.tareasyncrona.data.db.FormVisitEntity;
+import com.example.tareasyncrona.services.api.BankApiServiceImpl;
+import com.example.tareasyncrona.services.api.CatalogueCFDIApiServiceImpl;
+import com.example.tareasyncrona.services.api.CediApiServiceImpl;
+import com.example.tareasyncrona.services.api.ChargeApiServiceImpl;
+import com.example.tareasyncrona.services.api.ClientAuthorizationApiServiceImpl;
+import com.example.tareasyncrona.services.api.ClientExhibitorApiServiceImpl;
+import com.example.tareasyncrona.services.api.ClientProductBonificationApiServiceImpl;
+import com.example.tareasyncrona.services.api.ClientApiServiceImpl;
+import com.example.tareasyncrona.services.api.EmployeeApiServiceImpl;
+import com.example.tareasyncrona.services.api.ExhibitorApiServiceImpl;
+import com.example.tareasyncrona.services.api.FolioApiServiceImpl;
+import com.example.tareasyncrona.services.api.FormVisitApiServiceImpl;
+import com.example.tareasyncrona.services.api.FuelTicketApiServiceImpl;
+import com.example.tareasyncrona.services.api.LineApiServiceImpl;
+import com.example.tareasyncrona.services.api.MethodOfPaymentApiServiceImpl;
+import com.example.tareasyncrona.services.api.PaymentApiServiceImpl;
+import com.example.tareasyncrona.services.api.PriceApiServiceImpl;
+import com.example.tareasyncrona.services.api.ProductRMIApiServiceImpl;
+import com.example.tareasyncrona.services.api.ProductApiServiceImpl;
+import com.example.tareasyncrona.services.api.RouteApiServiceImpl;
+import com.example.tareasyncrona.services.api.TaxApiServiceImpl;
+import com.example.tareasyncrona.services.api.TypeClientApiServiceImpl;
+import com.example.tareasyncrona.data.api.Bank;
+import com.example.tareasyncrona.data.api.CatalogueCFDI;
+import com.example.tareasyncrona.data.api.Cedi;
+import com.example.tareasyncrona.data.api.Charge;
+import com.example.tareasyncrona.data.api.Client;
+import com.example.tareasyncrona.data.api.ClientAuthorization;
+import com.example.tareasyncrona.data.api.ClientExhibitor;
+import com.example.tareasyncrona.data.api.ClientProductBonification;
+import com.example.tareasyncrona.data.api.Employee;
+import com.example.tareasyncrona.data.api.Exhibitor;
+import com.example.tareasyncrona.data.api.Folio;
+import com.example.tareasyncrona.data.api.FuelTicket;
+import com.example.tareasyncrona.data.api.Line;
+import com.example.tareasyncrona.data.api.MethodOfPayment;
+import com.example.tareasyncrona.data.api.Payment;
+import com.example.tareasyncrona.data.api.Price;
+import com.example.tareasyncrona.data.api.Product;
+import com.example.tareasyncrona.data.api.ProductRMI;
+import com.example.tareasyncrona.data.api.ResponseDataWithCode;
+import com.example.tareasyncrona.data.api.Route;
+import com.example.tareasyncrona.data.api.Tax;
+import com.example.tareasyncrona.data.api.TypeClient;
+import com.example.tareasyncrona.data.db.BankEntity;
+import com.example.tareasyncrona.data.db.CatalogueCFDIEntity;
+import com.example.tareasyncrona.data.db.CediEntity;
+import com.example.tareasyncrona.data.db.ChargeEntity;
+import com.example.tareasyncrona.data.db.ClientAuthorizationEntity;
+import com.example.tareasyncrona.data.db.ClientEntity;
+import com.example.tareasyncrona.data.db.ClientExhibitorEntity;
+import com.example.tareasyncrona.data.db.ClientProductBonificationEntity;
+import com.example.tareasyncrona.data.db.EmployeeEntity;
+import com.example.tareasyncrona.data.db.ExhibitorEntity;
+import com.example.tareasyncrona.data.db.FolioEntity;
+import com.example.tareasyncrona.data.db.FuelTicketEntity;
+import com.example.tareasyncrona.data.db.LineEntity;
+import com.example.tareasyncrona.data.db.MethodOfPaymentEntity;
+import com.example.tareasyncrona.data.db.PaymentEntity;
+import com.example.tareasyncrona.data.db.PriceEntity;
+import com.example.tareasyncrona.data.db.ProductEntity;
+import com.example.tareasyncrona.data.db.ProductRMIEntity;
+import com.example.tareasyncrona.data.db.RouteEntity;
+import com.example.tareasyncrona.data.db.TaxEntity;
+import com.example.tareasyncrona.data.db.TypeClientEntity;
+import com.example.tareasyncrona.services.db.BankDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.CatalogueCFDIDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.CediDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.ChargeDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.ClientAuthorizationDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.ClientExhibitorDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.ClientProductBonificationDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.ClientDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.EmployeeDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.ExhibitorDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.FolioDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.FormVisitDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.FuelTicketDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.LineDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.MethodOfPaymentDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.PaymentDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.PriceDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.ProductDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.ProductRMIDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.RouteDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.TaxDatabaseServiceImpl;
+import com.example.tareasyncrona.services.db.TypeClientDatabaseServiceImpl;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
+import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -114,7 +120,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        AndroidNetworking.initialize(getApplicationContext());
+        //INICIA TODOS LOS SERVICIOS DE NETWORKING CON OKHTTPCLIENT
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                . writeTimeout(30, TimeUnit.SECONDS)
+                .build();
+        AndroidNetworking.initialize(getApplicationContext(), okHttpClient);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> new ProgressDialogAsyncTask().execute());
@@ -123,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
         setUpRealmConfig();
         Realm realm = Realm.getDefaultInstance();
         realm.close();
+
+        Constants.Api.URL.setIP();
     }
 
     private void setUpRealmConfig() {
@@ -151,13 +165,14 @@ public class MainActivity extends AppCompatActivity {
         deleteRealm(CatalogueCFDIEntity.class);
         deleteRealm(CediEntity.class);
         deleteRealm(ChargeEntity.class);
-        deleteRealm(ClientEntity.class);
         deleteRealm(ClientAuthorizationEntity.class);
+        deleteRealm(ClientEntity.class);
         deleteRealm(ClientExhibitorEntity.class);
         deleteRealm(ClientProductBonificationEntity.class);
         deleteRealm(EmployeeEntity.class);
         deleteRealm(ExhibitorEntity.class);
         deleteRealm(FolioEntity.class);
+        deleteRealm(FormVisitEntity.class);
         deleteRealm(FuelTicketEntity.class);
         deleteRealm(LineEntity.class);
         deleteRealm(MethodOfPaymentEntity.class);
@@ -193,88 +208,92 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(manager.getSimpleName());
                 System.out.println(responseDataWithCode.getData().getClass().getSimpleName());
                 switch (manager.getSimpleName()) {
-                    case "BankServiceDatabase": {
-                        BankServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "BankDatabaseServiceImpl": {
+                        BankDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "CatalogueCFDIServiceDatabase": {
-                        CatalogueCFDIServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "CatalogueCFDIDatabaseServiceImpl": {
+                        CatalogueCFDIDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "CediServiceDatabase": {
-                        CediServiceDatabase.getInstance().addObject(responseDataWithCode.getDataAsCedi());
+                    case "CediDatabaseServiceImpl": {
+                        CediDatabaseServiceImpl.getInstance().addObject(responseDataWithCode.getDataAsCedi());
                         break;
                     }
-                    case "ChargeServiceDatabase": {
-                        ChargeServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "ChargeDatabaseServiceImpl": {
+                        ChargeDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "ClientAuthorizationServiceDatabase": {
-                        ClientAuthorizationServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "ClientAuthorizationDatabaseServiceImpl": {
+                        ClientAuthorizationDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "ClientExhibitorServiceDatabase": {
-                        ClientExhibitorServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "ClientExhibitorDatabaseServiceImpl": {
+                        ClientExhibitorDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "ClientServiceDatabase": {
-                        ClientServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "ClientDatabaseServiceImpl": {
+                        ClientDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "ClientProductBonificationServiceDatabase": {
-                        ClientProductBonificationServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "ClientProductBonificationDatabaseServiceImpl": {
+                        ClientProductBonificationDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "EmployeeServiceDatabase": {
-                        EmployeeServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "EmployeeDatabaseServiceImpl": {
+                        EmployeeDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "TypeClientServiceDatabase": {
-                        TypeClientServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "TypeClientDatabaseServiceImpl": {
+                        TypeClientDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "ExhibitorServiceDatabase": {
-                        ExhibitorServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "ExhibitorDatabaseServiceImpl": {
+                        ExhibitorDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "FolioServiceDatabase": {
-                        FolioServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "FolioDatabaseServiceImpl": {
+                        FolioDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "FuelTicketServiceDatabase": {
-                        FuelTicketServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "FuelTicketDatabaseServiceImpl": {
+                        FuelTicketDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "LineServiceDatabase": {
-                        LineServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "LineDatabaseServiceImpl": {
+                        LineDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "MethodOfPaymentServiceDatabase": {
-                        MethodOfPaymentServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "MethodOfPaymentDatabaseServiceImpl": {
+                        MethodOfPaymentDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "PaymentServiceDatabase": {
-                        PaymentServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "PaymentDatabaseServiceImpl": {
+                        PaymentDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "PriceServiceDatabase": {
-                        PriceServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "PriceDatabaseServiceImpl": {
+                        PriceDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "ProductServiceDatabase": {
-                        ProductServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "ProductDatabaseServiceImpl": {
+                        ProductDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "ProductRMIServiceDatabase": {
-                        ProductRMIServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "ProductRMIDatabaseServiceImpl": {
+                        ProductRMIDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
-                    case "RouteServiceDatabase": {
-                        RouteServiceDatabase.getInstance().addObject(responseDataWithCode.getDataAsRoute());
+                    case "RouteDatabaseServiceImpl": {
+                        RouteDatabaseServiceImpl.getInstance().addObject(responseDataWithCode.getDataAsRoute());
                         break;
                     }
-                    case "TaxServiceDatabase": {
-                        TaxServiceDatabase.getInstance().addList(responseDataWithCode.getDataAsArray());
+                    case "TaxDatabaseServiceImpl": {
+                        TaxDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
+                        break;
+                    }
+                    case "FormVisitDatabaseServiceImpl": {
+                        FormVisitDatabaseServiceImpl.getInstance().addList(responseDataWithCode.getDataAsArray());
                         break;
                     }
                     default: {
@@ -290,90 +309,146 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(String... strings) {
+            for (int i = 0; i <= 21; i++) {
+                switch (i) {
+                    case 0: {
+                        publishProgress(0);
+                        ResponseDataWithCode<ArrayList<Bank>> bank = BankApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(bank, BankDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 1: {
+                        publishProgress(1);
+                        ResponseDataWithCode<ArrayList<CatalogueCFDI>> catalogueCFDIs = CatalogueCFDIApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(catalogueCFDIs, CatalogueCFDIDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 2: {
+                        publishProgress(2);
+                        ResponseDataWithCode<Cedi> cedi = CediApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(cedi, CediDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 3: {
+                        publishProgress(3);
+                        ResponseDataWithCode<ArrayList<Charge>> charges = ChargeApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(charges, ChargeDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 4: {
+                        publishProgress(4);
+                        ResponseDataWithCode<ArrayList<Client>> clients = ClientApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(clients, ClientDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 5: {
+                        publishProgress(5);
+                        ResponseDataWithCode<ArrayList<ClientAuthorization>> clientAuthorizations = ClientAuthorizationApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(clientAuthorizations, ClientAuthorizationDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 6: {
+                        publishProgress(6);
+                        ResponseDataWithCode<ArrayList<ClientExhibitor>> clientExhibitors = ClientExhibitorApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(clientExhibitors, ClientExhibitorDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 7: {
+                        publishProgress(7);
+                        ResponseDataWithCode<ArrayList<ClientProductBonification>> clientProductBonifications = ClientProductBonificationApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(clientProductBonifications, ClientProductBonificationDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 8: {
+                        publishProgress(8);
+                        ResponseDataWithCode<ArrayList<Exhibitor>> exhibitors = ExhibitorApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(exhibitors, ExhibitorDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 9: {
+                        publishProgress(9);
+                        ResponseDataWithCode<ArrayList<Employee>> employees = EmployeeApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(employees, EmployeeDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 10: {
+                        publishProgress(10);
+                        ResponseDataWithCode<ArrayList<Folio>> folios = FolioApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(folios, FolioDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 11: {
+                        publishProgress(11);
+                        ResponseDataWithCode<ArrayList<FuelTicket>> fuelTickets = FuelTicketApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(fuelTickets, FuelTicketDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 12: {
+                        publishProgress(12);
+                        ResponseDataWithCode<ArrayList<Line>> lines = LineApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(lines, LineDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 13: {
+                        publishProgress(13);
+                        ResponseDataWithCode<ArrayList<MethodOfPayment>> methodOfPayments = MethodOfPaymentApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(methodOfPayments, MethodOfPaymentDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 14: {
+                        publishProgress(14);
+                        ResponseDataWithCode<ArrayList<Payment>> payments = PaymentApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(payments, PaymentDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 15: {
+                        publishProgress(15);
+                        ResponseDataWithCode<ArrayList<Price>> prices = PriceApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(prices, PriceDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 16: {
+                        publishProgress(16);
+                        ResponseDataWithCode<ArrayList<Product>> products = ProductApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(products, ProductDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 17: {
+                        publishProgress(17);
+                        ResponseDataWithCode<ArrayList<ProductRMI>> productsRMI = ProductRMIApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(productsRMI, ProductRMIDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 18: {
+                        publishProgress(18);
+                        ResponseDataWithCode<Route> route = RouteApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(route, RouteDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 19: {
+                        publishProgress(19);
+                        ResponseDataWithCode<ArrayList<Tax>> taxes = TaxApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(taxes, TaxDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 20: {
+                        publishProgress(20);
+                        ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(typeClients, TypeClientDatabaseServiceImpl.class);
+                        break;
+                    }
+                    case 21: {
+                        publishProgress(21);
+                        ResponseDataWithCode<ArrayList<FormVisit>> formVisits = FormVisitApiServiceImpl.getInstance().fetch();
+                        saveWithStatusCode(formVisits, FormVisitDatabaseServiceImpl.class);
+                        break;
+                    }
+                    default: {
 
-            publishProgress(0);
-            ResponseDataWithCode<ArrayList<Bank>> bank = BankServiceImpl.getInstance().fetch();
-            saveWithStatusCode(bank, BankServiceDatabase.class);
-
-            publishProgress(1);
-            ResponseDataWithCode<ArrayList<CatalogueCFDI>> catalogueCFDIs = CatalogueCFDIServiceImpl.getInstance().fetch();
-            saveWithStatusCode(catalogueCFDIs, CatalogueCFDIServiceDatabase.class);
-
-            publishProgress(2);
-            ResponseDataWithCode<Cedi> cedi = CediServiceImpl.getInstance().fetch();
-            saveWithStatusCode(cedi, CediServiceDatabase.class);
-
-            publishProgress(3);
-            ResponseDataWithCode<ArrayList<Charge>> charges = ChargeServiceImpl.getInstance().fetch();
-            saveWithStatusCode(charges, ChargeServiceDatabase.class);
-
-            publishProgress(4);
-            ResponseDataWithCode<ArrayList<Client>> clients = ClientServiceImpl.getInstance().fetch();
-            saveWithStatusCode(clients, ClientServiceDatabase.class);
-
-            publishProgress(5);
-            ResponseDataWithCode<ArrayList<ClientAuthorization>> clientAuthorizations = ClientAuthorizationServiceImpl.getInstance().fetch();
-            saveWithStatusCode(clientAuthorizations, ClientAuthorizationServiceDatabase.class);
-
-            publishProgress(6);
-            ResponseDataWithCode<ArrayList<ClientExhibitor>> clientExhibitors = ClientExhibitorServiceImpl.getInstance().fetch();
-            saveWithStatusCode(clientExhibitors, ClientExhibitorServiceDatabase.class);
-
-            publishProgress(7);
-            ResponseDataWithCode<ArrayList<ClientProductBonification>> clientProductBonifications = ClientProductBonificationServiceImpl.getInstance().fetch();
-            saveWithStatusCode(clientProductBonifications, ClientProductBonificationServiceDatabase.class);
-
-            publishProgress(8);
-            ResponseDataWithCode<ArrayList<Exhibitor>> exhibitors = ExhibitorServiceImpl.getInstance().fetch();
-            saveWithStatusCode(exhibitors, ExhibitorServiceDatabase.class);
-
-            publishProgress(9);
-            ResponseDataWithCode<ArrayList<Employee>> employees = EmployeeServiceImpl.getInstance().fetch();
-            saveWithStatusCode(employees, EmployeeServiceDatabase.class);
-
-            publishProgress(10);
-            ResponseDataWithCode<ArrayList<Folio>> folios = FolioServiceImpl.getInstance().fetch();
-            saveWithStatusCode(folios, FolioServiceDatabase.class);
-
-            publishProgress(11);
-            ResponseDataWithCode<ArrayList<FuelTicket>> fuelTickets = FuelTicketServiceImpl.getInstance().fetch();
-            saveWithStatusCode(fuelTickets, FuelTicketServiceDatabase.class);
-
-            publishProgress(12);
-            ResponseDataWithCode<ArrayList<Line>> lines = LineServiceImpl.getInstance().fetch();
-            saveWithStatusCode(lines, LineServiceDatabase.class);
-
-            publishProgress(13);
-            ResponseDataWithCode<ArrayList<MethodOfPayment>> methodOfPayments = MethodOfPaymentServiceImp.getInstance().fetch();
-            saveWithStatusCode(methodOfPayments, MethodOfPaymentServiceDatabase.class);
-
-            publishProgress(14);
-            ResponseDataWithCode<ArrayList<Payment>> payments = PaymentServiceImpl.getInstance().fetch();
-            saveWithStatusCode(payments, PaymentServiceDatabase.class);
-
-            publishProgress(15);
-            ResponseDataWithCode<ArrayList<Price>> prices = PriceServiceImpl.getInstance().fetch();
-            saveWithStatusCode(prices, PriceServiceDatabase.class);
-
-            publishProgress(16);
-            ResponseDataWithCode<ArrayList<Product>> products = ProductServiceImpl.getInstance().fetch();
-            saveWithStatusCode(products, ProductServiceDatabase.class);
-
-            publishProgress(17);
-            ResponseDataWithCode<ArrayList<ProductRMI>> productsRMI = ProductRMIServiceImpl.getInstance().fetch();
-            saveWithStatusCode(productsRMI, ProductRMIServiceDatabase.class);
-
-            publishProgress(18);
-            ResponseDataWithCode<Route> route = RouteServiceImpl.getInstance().fetch();
-            saveWithStatusCode(route, RouteServiceDatabase.class);
-
-            publishProgress(19);
-            ResponseDataWithCode<ArrayList<Tax>> taxes = TaxServiceImpl.getInstance().fetch();
-            saveWithStatusCode(taxes, TaxServiceDatabase.class);
-
-            publishProgress(20);
-            ResponseDataWithCode<ArrayList<TypeClient>> typeClients = TypeClientServiceImpl.getInstance().fetch();
-            saveWithStatusCode(typeClients, TypeClientServiceDatabase.class);
+                    }
+                }
+                if (isCancelled()) break;
+            }
 
             return 20;
         }
@@ -461,6 +536,9 @@ public class MainActivity extends AppCompatActivity {
                 case 20:
                     mProgressDialog.setMessage("TIPO DE CLIENTES");
                     break;
+                case 21:
+                    mProgressDialog.setMessage("FORMA DE VISITA");
+                    break;
                 default:
                     mProgressDialog.setMessage("CONECTANDO");
             }
@@ -470,7 +548,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onCancelled() {
             super.onCancelled();
             mProgressDialog.dismiss();
-            Toast.makeText(MainActivity.this, "ERROR DE CONEXION CON EL SERVIDOR", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "ERROR DE CONEXION CON EL SERVIDOR", Toast.LENGTH_LONG).show();
         }
     }
 }
